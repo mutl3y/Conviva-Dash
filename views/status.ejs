@@ -1,0 +1,52 @@
+<%- include head.ejs %>
+<%- include navbar.ejs %>
+
+<!-- SET THE CONTROLLER AND GET ALL searchResults -->
+<body ng-app="mongoDashStatus">
+<section class="container-fluid" ng-controller="StatusMainController">
+
+    <h2>MongoDb Server Status</h2>
+
+    <!-- Stats Widget Ledgend -->
+    <div class="col-xs-2 pull-right" id="statsChoices">
+        <h4>Stats Widgets</h4>
+
+        <div class="row-xs-2" ng-repeat="obj in statObjectsToDisplay track by $index | orderBy:orderProp:direction" ng-cloak>
+            <input type="checkbox" style="{{obj.styles;}}" name="{{obj.name}}" id="{{obj.name}}"
+                   ng-model="statObjectsToDisplay[$index].show"/>
+            <label class="text-left" style="{{obj.styles;}}" for="serverStats">{{obj.name}}</label>
+        </div>
+    </div>
+
+    <!--Results container-->
+    <div id=resultsDataContainer class="row">
+        <div class="row">
+            <div ng-repeat="stat in statObjectsToDisplay track by $index | orderBy:orderProp:direction">
+                <div style="word-wrap: normal;" class="{{stat.class}}" ng-show="stat.show">
+                    <label class="text-capitalize" for="stat.name" ng-cloak>{{stat.name}}</label>
+                    <pre ng-if="stat.type=='JSON'" style="{{stat.styles;}}" id="stat.name" ng-cloak>{{stat.result | json : 4}}</pre>
+                    <d3-bar ng-if="stat.type=='barGraph'" lab="'name'" val="stat.result"
+                                      grouped="false"></d3-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+
+<button ng-click="getStatsData();">Refresh graph</button>
+
+<%- include footer.ejs %>
+<script src="/js/d3.v3.min.js" charset="utf-8"></script>
+<script src="/js/angular.js"></script>
+<script src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script src="/js/angular-resource.min.js"></script>
+<script src="/api/status/statusApp.js"></script>
+<script src="/api/status/barD3Directive.js"></script>
+<script src="/api/all/appLogging.js"></script>
+<script src="/api/all/util.js"></script>
+<script src="/api/status/controllers/statusMainCtrl.js"></script>
+
+
+</html

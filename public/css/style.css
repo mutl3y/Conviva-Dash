@@ -1,0 +1,267 @@
+html {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    min-height: 110%;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+
+.ngValMsg {
+    color: red;
+}
+
+body {
+    overflow: scroll;
+    padding-top: 50px;
+    background: #fff;
+}
+
+.navbar {
+    background: #6cf;
+}
+
+.footer {
+    position: fixed;
+    bottom: auto;
+    bottom: 0;
+    left: 0;
+    margin-top: 100px;
+    /*max-height: 15%;*/
+    max-height: 15%;
+    width: 100%;
+    height: auto;
+    background: #6cf;
+    text-align: center;
+}
+
+.footer img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 1px;
+    max-width: 15%;
+    width: auto;
+    height: auto;
+}
+
+.footer a {
+    color: red;
+}
+
+/*fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.table-no-border > thead > tr > th,
+.table-no-border > tbody > tr > th,
+.table-no-border > tfoot > tr > th,
+.table-no-border > thead > tr > td,
+.table-no-border > tbody > tr > td,
+.table-no-border > tfoot > tr > td {
+    border-top: none;
+}*/
+
+.selected {
+    background-color: lightblue;
+}
+
+input.ng-invalid, select.ng-invalid {
+    border: 1px solid red;
+}
+
+input.ng-valid {
+    border: 1px solid green;
+}
+
+/* 
+     <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: .8em Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 0px 5px; }
+      #messages li:nth-child(odd) { background: #eee; }
+			#heading{ background: #000; padding: 3px; position: fixed; top: 0; width: 90%; padding: 0px 5px;color: red;}
+			#online_indicator {float: right;width: 15px;height: 16px;padding: 0px 5px;background-image: url('/images/trafficlight.png');}
+			#online_indicator.online {background-position: -15px 0;}
+    </style>
+ */
+
+/*#loading {
+    display: none;
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    top: -50px;
+    z-index: 100000;
+    color: black;
+}
+#splash #loading {
+    top: 32px;
+}
+
+
+#fountainG {
+    position: relative;
+    width: 100px;
+    height: 12px;
+}
+.fountainG {
+    position: absolute;
+    top: 0;
+    *//*background-color: rgba(255, 255, 255, 0);*//*
+    width: 10px;
+    height: 10px;
+    -moz-animation-name: bounce_fountainG;
+    -moz-animation-duration: 1.3s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-direction: linear;
+    -moz-transform: scale(.3);
+    -moz-border-radius: 8px;
+    -webkit-animation-name: bounce_fountainG;
+    -webkit-animation-duration: 1.3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: linear;
+    -webkit-transform: scale(.3);
+    -webkit-border-radius: 8px;
+    -ms-animation-name: bounce_fountainG;
+    -ms-animation-duration: 1.3s;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-direction: linear;
+    -ms-transform: scale(.3);
+    -ms-border-radius: 8px;
+    -o-animation-name: bounce_fountainG;
+    -o-animation-duration: 1.3s;
+    -o-animation-iteration-count: infinite;
+    -o-animation-direction: linear;
+    -o-transform: scale(.3);
+    -o-border-radius: 8px;
+    animation-name: bounce_fountainG;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    animation-direction: linear;
+    transform: scale(.3);
+    border-radius: 8px;
+}
+#fountainG_1 {
+    left: 0;
+    -moz-animation-delay: 0.52s;
+    -webkit-animation-delay: 0.52s;
+    -ms-animation-delay: 0.52s;
+    -o-animation-delay: 0.52s;
+    animation-delay: 0.52s;
+}
+#fountainG_2 {
+    left: 13px;
+    -moz-animation-delay: 0.65s;
+    -webkit-animation-delay: 0.65s;
+    -ms-animation-delay: 0.65s;
+    -o-animation-delay: 0.65s;
+    animation-delay: 0.65s;
+}
+#fountainG_3 {
+    left: 25px;
+    -moz-animation-delay: 0.78s;
+    -webkit-animation-delay: 0.78s;
+    -ms-animation-delay: 0.78s;
+    -o-animation-delay: 0.78s;
+    animation-delay: 0.78s;
+}
+#fountainG_4 {
+    left: 38px;
+    -moz-animation-delay: 0.91s;
+    -webkit-animation-delay: 0.91s;
+    -ms-animation-delay: 0.91s;
+    -o-animation-delay: 0.91s;
+    animation-delay: 0.91s;
+}
+#fountainG_5 {
+    left: 50px;
+    -moz-animation-delay: 1.04s;
+    -webkit-animation-delay: 1.04s;
+    -ms-animation-delay: 1.04s;
+    -o-animation-delay: 1.04s;
+    animation-delay: 1.04s;
+}
+#fountainG_6 {
+    left: 63px;
+    -moz-animation-delay: 1.17s;
+    -webkit-animation-delay: 1.17s;
+    -ms-animation-delay: 1.17s;
+    -o-animation-delay: 1.17s;
+    animation-delay: 1.17s;
+}
+#fountainG_7 {
+    left: 75px;
+    -moz-animation-delay: 1.3s;
+    -webkit-animation-delay: 1.3s;
+    -ms-animation-delay: 1.3s;
+    -o-animation-delay: 1.3s;
+    animation-delay: 1.3s;
+}
+#fountainG_8 {
+    left: 88px;
+    -moz-animation-delay: 1.43s;
+    -webkit-animation-delay: 1.43s;
+    -ms-animation-delay: 1.43s;
+    -o-animation-delay: 1.43s;
+    animation-delay: 1.43s;
+}
+@-moz-keyframes bounce_fountainG {
+    0% {
+        -moz-transform: scale(1);
+        background-color: #000;
+    }
+    100% {
+        -moz-transform: scale(.3);
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+@-webkit-keyframes bounce_fountainG {
+    0% {
+        -webkit-transform: scale(1);
+        background-color: #fff;
+    }
+    100% {
+        -webkit-transform: scale(.3);
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+@-ms-keyframes bounce_fountainG {
+    0% {
+        -ms-transform: scale(1);
+        background-color: #fff;
+    }
+    100% {
+        -ms-transform: scale(.3);
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+@-o-keyframes bounce_fountainG {
+    0% {
+        -o-transform: scale(1);
+        background-color: #fff;
+    }
+    100% {
+        -o-transform: scale(.3);
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+@keyframes bounce_fountainG {
+    0% {
+        transform: scale(1);
+        background-color: #fff;
+    }
+    100% {
+        transform: scale(.3);
+        background-color: rgba(255, 255, 255, 0);
+    }
+}*/

@@ -1,0 +1,25 @@
+{
+    "tags"            : {
+        "allowUnknownTags": true
+    },
+    "source"          : {
+        "include"       : ["app", "server.js", "api" ],
+        "exclude"       : ["node_modules", "api/docs", "config/production"],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_|server[\\\\|//]node_modules|js[\\\\|//]lib|css[\\\\|//]lib"
+    },
+    "plugins"         : [],
+    "opts"            : {
+        "destination": "./api/docs/",
+        "recurse"    : true
+    },
+    "allowUnknownTags": true,
+    "systemName"      : "ottscDash",
+    "footer"          : "mark.heynes@@sky.uk",
+    "copyright"       : "Copyright © 2016",
+    "navType"         : "vertical",
+    "theme"           : "superhero",
+    "linenums"        : true,
+    "collapseSymbols" : false,
+    "inverseNav"      : true
+}

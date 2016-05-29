@@ -1,0 +1,39 @@
+<%- include head.ejs %>
+<!--suppress HtmlUnknownTarget -->
+<body>
+<%- include navbar.ejs %>
+
+<div class='container'>
+
+    <div class='page-header text-center'>
+        <h1><span class='fa fa-anchor'></span> Overview</h1>
+        <a href='/logout' class='btn btn-default btn-sm'>Logout <%= user.email %></a>
+    </div>
+
+    <div class='row'>
+        <!-- LOCAL INFORMATION -->
+        <div class='col-sm-6'>
+            <div class='well'>
+                <h3><span class='fa fa-user'></span> Local</h3>
+
+                <% if (user.email) { %>
+                <p>
+                    <strong>id</strong>: <%= user._id %><br>
+                    <strong>Email</strong>: <%= user.email %><br>
+                    <% if (user.admin) { %>
+                    <strong>Admin User</strong>:
+                    <% } else { %>
+                    <strong>not Admin User</strong>
+                    <% } %>
+                </p>
+                <% } else { %>
+                <strong>Your email is not in your profile please report this issue</strong>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<%- include footer.ejs %>
+</html>

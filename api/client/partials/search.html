@@ -1,0 +1,84 @@
+<div class="modal-header">
+    <h2 id="search_title">{{formData.title}}</h2>
+</div>
+
+<container>
+    <alert ng-if="alerts.length >0" ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+</container>
+
+<div class="modal-body" ng-show="!showResults">
+    <form name="search" class="form-horizontal col-sm-12" role="form" novalidate>
+        <div class="form-group" ng-repeat="queryObject in searchParams.queryArray">
+            <label for="{{queryObject.field}}" class="col-sm-4 control-label">{{ searchParams.queryArray[$index].name
+                }} </label>
+
+            <div class="col-sm-6" id="queryObject">
+                <ng-form name="searchFieldForm">
+                    <input type="{{searchParams.queryArray[$index].type}}" class="form-control col-sm-5"
+                           ng-model="formData.queryArray[$index].query"
+                           ng-minlength="{{ queryObject.min }}"
+                           ng-maxlength="{{ queryObject.max }}"
+                           ng-pattern="/{{queryObject.regExp}}/"
+                           id="{{queryObject.field}}"
+                           name="input"
+                           popover-placement="top"
+                           popover="{{ queryObject.helperText }}"
+                           popover-trigger="mouseenter"
+                           ng-required="{{queryObject.required}}">
+                    <span class="ngValMsg"
+                          ng-show="searchFieldForm.input.$dirty && searchFieldForm.input.$error.pattern">Fails pattern match</span>
+                    <span class="ngValMsg"
+                          ng-show="searchFieldForm.input.$dirty && searchFieldForm.input.$error.minlength">Too short, min length={{queryObject.min}}<BR></span>
+                    <span class="ngValMsg"
+                          ng-show="searchFieldForm.input.$dirty && searchFieldForm.input.$error.maxlength">Too long, max length={{queryObject.max}}<BR></span>
+                    <span class="ngValMsg"
+                          ng-show="searchFieldForm.input.$dirty && searchFieldForm.input.$error.required">This field is required!</span>
+
+                    <!--<p>Charactors remaining = {{ queryObject.max - formData.queryArray[$index].query.length }}</p>-->
+                </ng-form>
+            </div>
+        </div>
+    </form>
+
+    <button type="button" class="close" ng-click="close(false)" data-dismiss="modal"
+            aria-hidden="true">&times;</button>
+</div>
+
+
+<div class="modal-body" ng-show="showResults">
+    <h1>Results found {{ runSearchResults.length }} </h1>
+
+    <div id=resultsDataContainer class="container">
+        <div class="row clearfix">
+            <div class="col-xs-12 column">
+                <table id="resultsTable" class="table table-condensed" ng-show="runSearchResults.length >0" ng-cloak>
+                    <thead>
+                    <tr>
+                        <th ng-repeat="(header, value) in runSearchResults[0]">
+                            {{ header }}
+                        </th>
+
+                    </thead>
+                    <tbody>
+                    <thead>
+                    <tr ng-repeat="row  in runSearchResults">
+                        <td ng-repeat="cell in row">
+                            {{ cell }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="cancel()">Cancel !</button>
+    <button class="btn btn-warning" ng-disabled="search.$invalid || search.$pristine" ng-click="validate()">Validate !
+    </button>
+    <button class="btn btn-danger" ng-click="run()">Run !</button>
+    <!-- ng-disabled="!valid"-->
+    <button class="btn" ng-click="close()">Close</button>
+</div>
+

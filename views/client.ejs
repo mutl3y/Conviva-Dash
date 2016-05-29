@@ -1,0 +1,63 @@
+<%- include head.ejs %>
+<%- include navbar.ejs %>
+
+<!--suppress ALL -->
+
+<html ng-app="mongoDashClient">
+
+
+<!-- SET THE CONTROLLER AND GET ALL searchResults -->
+<body>
+<section class="container" ng-controller="clientMainCtrl">
+    <h2>Searches found <span class="label label-info" ng-cloak>{{ searchResults.length }}</span></h2>
+
+    <div id=resultsDataContainer class="container">
+        <div class="row clearfix">
+            <div class="col-xs-12 column">
+                <table class="table table-condensed" ng-show="searchResults.length >= 1" ng-cloak>
+                    <thead>
+                    <tr>
+                        <th ng-click="sort('name')">Name</th>
+                        <th ng-click="sort('queryArray')">Fields</th>
+                        <th ng-click="sort('projection')">Search Projection</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="search in searchResults  | orderBy:orderProp:direction"
+                        ng-class="selected" ng-model='search[$index]'
+                        ng-click="setSelected(this)">
+                        <td>{{ search.name }}</td>
+                        <td>
+                            <li style="list-style-type: none;" ng-repeat="item in search.queryArray">{{ item.name }}
+                            </li>
+                        </td>
+                        <td>{{search.projection}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="btn-group">
+
+                    <button id=test_Button ng-disabled='!lastSelected' ng-click="RunTest()" class="btn">Run selected
+                        search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+</body>
+
+<%- include footer.ejs %>
+<script src="/js/angular.js"></script>
+<script src="/js/ui-bootstrap-tpls.js"></script>
+<script src="/js/angular-resource.min.js"></script>
+<script src="/api/client/clientApp.js"></script>
+<script src="/api/all/appLogging.js"></script>
+<script src="/api/all/util.js"></script>
+<script src="/api/client/controllers/clientMainCtrl.js"></script>
+<script src="/api/client/controllers/confirmationController.js"></script>
+<script src="/api/client/controllers/searchcontroller.js"></script>
+</html>

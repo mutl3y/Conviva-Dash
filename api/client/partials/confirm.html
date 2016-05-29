@@ -1,0 +1,36 @@
+<!--<div class="modal-header">
+    <h3 class="modal-title">Edit Search {{ obj['_id'] }}</h3>
+</div>
+<div class="modal-body">
+    <form name="editForm" class="form-horizontal" novalidate>
+        <div class="form-group" ng-repeat="(key, value) in obj">
+            <ng-form name="editForm">
+                <label>{{ key  }}
+                    <input type="text" class="form-control" name= obj[key] ng-model=obj[key] required>
+                </label>
+            </ng-form>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-warning" ng-click="validate()">Validate !</button>
+    <button class="btn btn-danger" ng-click="save()" ng-disabled =
+            "editForm.$dirty">Save !</button>
+</div>-->
+
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close(false)" data-dismiss="modal"
+            aria-hidden="true">&times;</button>
+    <h4 class="modal-title jumbotron">Are you really sure?</h4>
+</div>
+<div class="modal-body">
+    <p>Do you really want to do this...</p>
+</div>
+<div class="modal-footer">
+    <button type="button" ng-click="cancel()" class="btn btn-succsess" data-dismiss="modal">No
+    </button>
+    <button type="button" ng-click="confirm(true)" class="btn btn-danger">Yes
+    </button>
+</div>

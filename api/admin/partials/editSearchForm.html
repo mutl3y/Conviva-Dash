@@ -1,0 +1,180 @@
+<div class="modal-header">
+    <h2 id="search_form_title">{{formData.title}}</h2>
+</div>
+
+<div class="modal-body">
+    <form name="search_form" class="form-horizontal" role="form" novalidate>
+
+        <div class="form-group">
+            <label for="name" class="col-sm-2  control-label">Search Name</label>
+
+            <div class="col-sm-10">
+                <input type="text"
+                       id="name"
+                       placeholder="A unique name for this search"
+                       ng-model="formData.name"
+                       ng-minlength=6 ng-maxlength=100
+                       class="form-control" ng-required="true"
+                       popover-trigger="mouseenter" popover="This needs to be a unique descriptive name for the search">
+            </div>
+        </div>
+
+        <!--<div class="form-group">-->
+        <!--<label for="dbEngine" class="col-sm-2  control-label">Database Type</label>-->
+        <!--<div class="col-sm-3">-->
+        <!--<select ng-model="formData.dbEngine" id="dbEngine" class="form-control" ng-required="true">-->
+        <!--<option ng-repeat="dbType in data.dbTypes">{{dbType.name}}</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+
+
+        <div class="form-group">
+            <label for="database" class="col-sm-2  control-label">Database</label>
+
+            <div class="col-sm-10">
+                <input type="text"
+                       id="database"
+                       placeholder=""
+                       ng-model="formData.database"
+                       ng-minlength=6 ng-maxlength=40
+                       class="form-control" ng-required="true"
+                       popover-trigger="mouseenter" popover="This needs to be exact, Case sensitive">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Collection" class="col-sm-2  control-label">Collection</label>
+
+            <div class="col-sm-10">
+                <input type="text"
+                       id="Collection"
+                       placeholder=""
+                       ng-model="formData.Collection"
+                       ng-minlength=6 ng-maxlength=40
+                       class="form-control" ng-required="true"
+                       popover-trigger="mouseenter" popover="This needs to be exact, Case sensitive">
+            </div>
+        </div>
+
+
+        <div class="form-group " ng-repeat=" queryObject in formData.queryArray track by $index ">
+            <label for="queryObject" class="col-sm-2 control-label">Query element {{ $index }}
+                <a style="font-size: 70%;" href ng-click="formData.queryArray.splice($index, 1)"
+                   ng-show="formData.queryArray.length > 1">Remove
+                    this element</a>
+            </label>
+
+            <div class="col-sm-10 " id="queryObject">
+                <div class="col-sm-3">
+                    <label for="queryObject.field" class="control-label">DB Field</label>
+
+                    <input type="text" class="form-control" ng-model="queryObject.field" ng-minlength=1 ng-maxlength=30
+                           id="queryObject.field" placeholder="field" ng-required="true"
+                           popover-trigger="mouseenter"
+                           popover="Please use full db field syntax as you would use in MongoDB dot notation syntax, quotes not required!">
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="queryObject.name" class="control-label">Name</label>
+                    <input type="text" class="form-control" ng-model="queryObject.name" ng-minlength=1 ng-maxlength=30
+                           id="queryObject.name" placeholder="Display Name" ng-required="true"
+                           popover-trigger="mouseenter"
+                           popover="Descriptive name, E.G you may express field 'n' as 'Name'">
+                </div>
+
+                <div class="col-sm-3">
+                    <label for="queryObject.type" class=" control-label">Type</label>
+                    <select ng-model="queryObject.type" id="queryObject.type" class="form-control" ng-required="true">
+                        <option ng-repeat="fieldType in data.fieldTypes">{{fieldType.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="queryObject.helperText" class="control-label">Helper Text</label>
+                    <input type="text" class="form-control " ng-model="queryObject.helperText" ng-minlength=1
+                           ng-maxlength=100
+                           id="queryObject.helperText" placeholder="Popup text to assist user"
+                           ng-required="true"
+                           popover-trigger="mouseenter"
+                           popover="This is where you put helpfull remarks to help the user to fill the form in corectly">
+                </div>
+
+                <div class="col-sm-2">
+                    <label for="queryObject.required" class=" control-label">Required</label>
+                    <input type="checkbox" id=queryObject.required class="form-control" ng-model="queryObject.required"
+                           popover-trigger="mouseenter" popover="Is this an optional field for the search">
+
+                </div>
+
+                <div class="col-sm-2">
+                    <label for="queryObject.min" class="control-label">Min</label>
+                    <input type="number" class="form-control " ng-model="queryObject.min" ng-minlength=1
+                           ng-maxlength=3
+                           id="queryObject.min"
+                           placeholder="Min Value"
+                           ng-required="true"
+                           popover-trigger="mouseenter"
+                           popover="Minimun length of field, Used in validating user search submissions">
+                </div>
+
+                <div class="col-sm-2">
+                    <label for="queryObject.max" class="control-label">Max</label>
+                    <input type="number" class="form-control " ng-model="queryObject.max" ng-minlength=1
+                           ng-maxlength=3 id="queryObject.max" placeholder="Max Value"
+                           ng-required="true"
+                           popover-trigger="mouseenter"
+                           popover="Maximun length of field, Used in validating user search submiassions">
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="queryObject.regExp" class="control-label">Regular Expression</label>
+                    <input type="text" class="form-control " ng-model="queryObject.regExp" id="queryObject.regExp"
+                           placeholder="Regular Expression"
+                           popover-trigger="mouseenter" popover="Basic regular expression syntax supported">
+                </div>
+
+                <!--<div class="col-sm-3" ng-show="queryObject.regExp.length>0">-->
+                <!--<label for="queryObject.case" class=" control-label">Case Sensitive</label>-->
+                <!--<input type="checkbox" id=queryObject.case class=" form-control" ng-model="queryObject.case"-->
+                <!--popover-trigger="mouseenter"-->
+                <!--popover="If the regualar expression should not be case sensative check this box">-->
+                <!--</div>-->
+
+            </div>
+        </div>
+        <div>
+            <a href ng-click="formData.queryArray.push({})">Add query element</a>
+        </div>
+
+        <div class="form-group">
+
+            <label for="projection" class="col-sm-2 control-label">Projection</label>
+
+            <div class="col-sm-7">
+                <input type="text" class="form-control" ng-model="formData.projection"
+                       id="projection" ng-minlength=3 ng-maxlength=200
+                       placeholder='fields to return from query.' ng-required="true"
+                       popover-trigger="mouseenter"
+                       popover="Use this to filter the results of the search, Comma seperated, DOT Notation E.G. a._id : 0  There is no need to use quotes of any type as these are removed before a save and then added dynamically.">
+            </div>
+
+            <label for="active" class="col-sm-2 control-label">Activate</label>
+
+            <div class="col-sm-1">
+                <input type="checkbox" id=active class="form-control" ng-model="formData.active"
+                       popover-trigger="mouseenter" popover="Search must be activated for end users to use it">
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="cancel()">Cancel !</button>
+    <button class="btn btn-warning" ng-disabled="!search_form.$valid" ng-click="validate()">Validate !</button>
+    <button class="btn btn-danger" ng-disabled="!valid" ng-click="save()">Save !</button>
+    <!--<button class="btn btn-default" ng-click="displayRegex()">Calculate Cost !</button>-->
+
+</div>

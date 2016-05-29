@@ -1,0 +1,38 @@
+<%- include head.ejs %>
+<body>
+<%- include navbar.ejs %>
+
+<div class='container'>
+    <section>
+        <div class='row'>
+            <div class='col-xs-12 col-md-8 '>
+                <h3 class='glyphicon glyphicon-user'> <%= user.name ? user.name : '' %> </h3>
+                <table class='table table-no-border'>
+
+                    <tbody>
+                    <tr>
+                        <th>User id:</th>
+                        <td><%= user._id %></td>
+                    </tr>
+                    <tr>
+                        <th>Name:</th>
+                        <td><%= user.name %></td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td><%= user.email %></td>
+                    </tr>
+                    <% if (user.admin) { %>
+                    <th>Admin User:</th>
+                    <td>True</td>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+
+<%- include footer.ejs %>
+</html>

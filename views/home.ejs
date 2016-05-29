@@ -1,0 +1,30 @@
+<%- include head.ejs %>
+<body>
+<%- include navbar.ejs %>
+<div class='container'>
+
+    <div class='page-header text-center'>
+    </div>
+
+    <div class='row'>
+        <div class='col-xs-12 col-md-8'>
+            <h3>User Profile</h3>
+
+            <p>
+                <strong>Id</strong>:        <%= user._id %><br>
+                <strong>Name</strong>:        <%= user.name %><br>
+                <strong>Email</strong>:        <%= user.email %><br>
+                <% if (user.admin) { %>
+                <strong>Admin User</strong>:
+                <% } else { %>
+                <strong>not Admin User</strong>
+                <% } %>
+            </p>
+        </div>
+
+    </div>
+</div>
+</body>
+
+<%- include footer.ejs %>
+</html>
