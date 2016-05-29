@@ -9,7 +9,7 @@
 <!-- SET THE CONTROLLER AND GET ALL searchResults -->
 <body>
 <section class="container" ng-controller="clientMainCtrl">
-    <h2>Searches found <span class="label label-info" ng-cloak>{{ searchResults.length }}</span></h2>
+    <h2>Searches found <span class="label label-info" ng-cloak>{{ searchResults.length || 0}}</span></h2>
 
     <div id=resultsDataContainer class="container">
         <div class="row clearfix">
@@ -51,9 +51,13 @@
 </body>
 
 <%- include footer.ejs %>
-<script src="/js/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js"></script>
+
 <script src="/js/ui-bootstrap-tpls.js"></script>
-<script src="/js/angular-resource.min.js"></script>
 <script src="/api/client/clientApp.js"></script>
 <script src="/api/all/appLogging.js"></script>
 <script src="/api/all/util.js"></script>

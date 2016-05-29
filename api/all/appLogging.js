@@ -6,7 +6,7 @@
  * @description Debug logging control
  */
 app.config(['$logProvider', function ($logProvider) {
-    $logProvider.debugEnabled(false);
+    $logProvider.debugEnabled(true);
 }]);
 
 /**

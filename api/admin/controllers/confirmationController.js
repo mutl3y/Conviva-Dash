@@ -5,7 +5,7 @@
  *
  * @param $scope {object} pass in child scope
  *
- * @param $modalInstance {object}
+ * @param $uibModalInstance {object}
  * Reference to launched modal  instance
  *
  * Presents a confirmation dialogue
@@ -13,19 +13,19 @@
  */
 
 app.controller(
-    'confirmationController', function ($scope, $modalInstance) {
+    'confirmationController', function ($scope, $uibModalInstance) {
     /**
      *
      * @description Dismiss modal
      */
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
     /**
      * Script for close button
      */
     $scope.confirm = function () {
-        $modalInstance.close('True');
+        $uibModalInstance.close('True');
     };
 });

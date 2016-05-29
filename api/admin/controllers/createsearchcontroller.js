@@ -5,7 +5,7 @@
 var createSearchController;
 
 
-app.controller('createSearchController', function ($scope, $http, $filter, $modalInstance, $timeout, $log, fieldTypes) {
+app.controller('createSearchController', function ($scope, $http, $filter, $uibModalInstance, $timeout, $log, fieldTypes) {
     $scope.formData = {
         title     : 'Create Search',
         queryArray: [
@@ -41,7 +41,7 @@ app.controller('createSearchController', function ($scope, $http, $filter, $moda
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
 
@@ -56,7 +56,7 @@ app.controller('createSearchController', function ($scope, $http, $filter, $moda
         $http(config).success(
             function (data) {
                 $log.debug('Search added', $scope.formData.name);
-                $modalInstance.close(data);
+                $uibModalInstance.close(data);
                 //$log.debug(data);
             }).
             error(function (err) {

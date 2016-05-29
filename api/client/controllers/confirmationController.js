@@ -3,12 +3,12 @@
  */
 
 app.controller(
-    'confirmationController', function ($scope, $modalInstance) {
+    'confirmationController', function ($scope, $uibModalInstance) {
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
     $scope.confirm = function () {
-        $modalInstance.close('True');
+        $uibModalInstance.close('True');
     };
 });

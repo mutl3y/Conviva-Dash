@@ -20,5 +20,5 @@ var app;
  *
  * Root of admin app
  */
-app = angular.module('mongoDash', ['ngResource', 'ui.bootstrap']);
+app = angular.module('mongoDash', ['ngResource', 'ui.bootstrap', 'ngAnimate']);
 

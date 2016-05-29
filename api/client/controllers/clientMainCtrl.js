@@ -21,7 +21,7 @@ var clientMainCtrl;
  *  @kind            function
  */
 app.controller(
-    'clientMainCtrl', function ($scope, $http, $modal, $log) {
+    'clientMainCtrl', function ($scope, $http, $uibModal, $log) {
         'use strict';
         $scope.orderProp = 'name';  // Default sort field
         $scope.direction = false;   // default search direction false= ascending
@@ -53,7 +53,7 @@ app.controller(
             // todo add open dynamic modal from here using search parameters
             //noinspection JSUnusedGlobalSymbols
             //console.log($scope.lastSelected);
-            var modalInstance = $modal.open(
+            var modalInstance = $uibModal.open(
                 {
                     templateUrl: '/api/client/partials/search.html',
                     controller : 'searchController',

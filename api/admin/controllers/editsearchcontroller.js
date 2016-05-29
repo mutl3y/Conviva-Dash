@@ -8,7 +8,7 @@ var editSearchController;
 /**
  * @param $scope            {object} childscope of parent
  * @param $http             {object}
- * @param $modalInstance    {object} Reference to Modal
+ * @param $uibModalInstance    {object} Reference to Modal
  * @param $log              {object}
  * @param $filter           {object}
  * @param obj               {object}
@@ -19,9 +19,8 @@ var editSearchController;
  * @augments angular_module.adminApp
  * @memberOf api/admin
  */
-app.controller(
-    'editSearchController',  function ($scope, $http, $modalInstance, $log, $filter, obj, fieldTypes) {
-    $log.debug('edit controller recieved this to edit', obj);
+editSearchController = function ($scope, $http, $uibModalInstance, $log, $filter, obj, fieldTypes) {
+    $log.debug('edit controller received this to edit', obj);
     $scope.formData = obj;
     $scope.data = {};
     $scope.data.fieldTypes = fieldTypes;
@@ -50,7 +49,7 @@ app.controller(
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
     $scope.save = function () {
@@ -72,12 +71,12 @@ app.controller(
             }
         );
 
-        $modalInstance.close($scope.formData);
+        $uibModalInstance.close($scope.formData);
     };
 
     $scope.status = 'loading...';
 
     $scope.selected2 = undefined;
 
-});
+};
 

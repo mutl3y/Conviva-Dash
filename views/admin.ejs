@@ -14,10 +14,8 @@
         <div class="row clearfix">
             <div class="col-xs-12 column">
                 <div class="btn-group">
-                    <button id=create_Button ng-click="createSearch()" class='btn-success	btn'>Create Search
-                    </button>
-                    <button id=edit_Button ng-click="editSearch()" ng-model="data.search" class="hidden">Edit Search
-                    </button>
+                    <button id=create_Button ng-click="createSearch()" class='btn-success btn'>Create Search</button>
+                    <button id=edit_Button ng-click="editSearch()" ng-model="data.search" class="hidden">Edit Search</button>
                     <button id=delete_Button ng-click="deleteSearches()" class="hidden">Delete Search</button>
                     <button id=reset_Button ng-click="reset()" class="hidden">Reset</button>
                 </div>
@@ -31,7 +29,7 @@
                         <th ng-click="sort('queryArray')">Field ID: Type</th>
                         <th ng-click="sort('projection')">Search Projection</th>
                         <th ng-click="sort('active')">Activated</th>
-                        <th ng-click="sort('explain')">Cost</th>
+                        <!--<th ng-click="sort('explain')">Cost</th>-->
                     </tr>
                     </thead>
                     <tbody>
@@ -63,9 +61,17 @@
 
 <%- include footer.ejs %>
 <!--suppress HtmlUnknownTarget -->
-<script src="/js/angular.js"></script>
-<script src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<!--<script src="/js/angular.js"></script>
+<script src="/js/ui-bootstrap-tpls.js"></script>
 <script src="/js/angular-resource.min.js"></script>
+<script src="/js/angular-animate.js"></script>-->
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js"></script>
+<script src="/js/ui-bootstrap-tpls.js"></script>
 
 <script src="/api/admin/adminApp.js"></script>
 <script src="/api/all/util.js"></script>
@@ -73,7 +79,7 @@
 <script src="/api/admin/controllers/confirmationController.js"></script>
 <script src="/api/admin/controllers/createsearchcontroller.js"></script>
 <script src="/api/admin/controllers/editsearchcontroller.js"></script>
-<script src="/js/directives.js"></script>
+<!--<script src="/js/directives.js"></script>
 <script src='/js/filters.js'></script>
-<script src='/js/services.js'></script>
+<script src='/js/services.js'></script>-->
 </html>

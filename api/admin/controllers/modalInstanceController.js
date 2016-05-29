@@ -8,7 +8,7 @@
  * @class   angular_module
  * @extends adminApp
  * @param $scope {object} childscope of parent
- * @param $modalInstance {object} Reference to Modal
+ * @param $uibModalInstance {object} Reference to Modal
  * @param items {object} Variables being passed in
  * @description Controls the individual Modal popups
  *
@@ -20,7 +20,7 @@
  *
  */
 app.controller(
-    'ModalInstanceCtrl',  function ($scope, $modalInstance, items) {
+    'ModalInstanceCtrl',  function ($scope, $uibModalInstance, items) {
 
     $scope.items = items;
     $scope.selected = {
@@ -28,10 +28,10 @@ app.controller(
     };
 
     $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
+        $uibModalInstance.close($scope.selected.item);
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 });

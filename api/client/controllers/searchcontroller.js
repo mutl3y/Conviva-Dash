@@ -3,7 +3,7 @@
 var searchController;
 
 app.controller(
-    'searchController', function ($scope, $http, $modalInstance, $log, $filter, $timeout, obj) {
+    'searchController', function ($scope, $http, $uibModalInstance, $log, $filter, $timeout, obj) {
     $log.debug($scope);
     $scope.showResults = false;
     $scope.alerts = [];
@@ -84,10 +84,11 @@ app.controller(
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
     $scope.run = function () {
+        $log.debug('Form Data',$scope.formData);
         var config = {
             method : 'post',
             url    : '/api/b2bRunSearch/' + $scope.formData._id,
@@ -111,7 +112,7 @@ app.controller(
                 //Debugging stuff todo
                 $log.debug('Status code returned is ' + status);
                 $log.debug('Length of data returned ' + data.data.length);
-                //$log.debug(arguments);
+                $log.debug(arguments);
 
                 /**
                  * Display message to user
@@ -139,7 +140,7 @@ app.controller(
     };          // end of $scope.run
 
     $scope.close = function () {
-        $modalInstance.close($scope.formData);
+        $uibModalInstance.close($scope.formData);
     };
 
     $scope.getItemState = function (form, itemPrefix, index) {

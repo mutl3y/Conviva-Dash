@@ -3,7 +3,7 @@
 </div>
 
 <container>
-    <alert ng-if="alerts.length >0" ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+    <uib-alert ng-if="alerts.length >0" ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</uib-alert>
 </container>
 
 <div class="modal-body" ng-show="!showResults">
@@ -22,7 +22,7 @@
                            id="{{queryObject.field}}"
                            name="input"
                            popover-placement="top"
-                           popover="{{ queryObject.helperText }}"
+                           uib-popover="{{ queryObject.helperText }}"
                            popover-trigger="mouseenter"
                            ng-required="{{queryObject.required}}">
                     <span class="ngValMsg"

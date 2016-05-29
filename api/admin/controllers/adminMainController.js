@@ -9,13 +9,13 @@ var adminMainCtrl;
  * @extends angular_module.adminApp
  * @param $scope        {object} $http    {@link https://docs.angularjs.org/guide/scope}
  * @param $http         {object} $http    {@link http://docs.angularjs.org/api/ng.$http}
- * @param $modal        {object} $http    pass in Modal service from UI-Bootstrap
+ * @param $uibModal        {object} $http    pass in Modal service from UI-Bootstrap
  * @param $log          {object} $http   Angular logging facility
  * @description Main Angular controller for page
  *
  */
 app.controller(
-    'adminMainCtrl', function ($scope, $http, $modal, $log) {
+    'adminMainCtrl', function ($scope, $http, $uibModal, $log) {
         'use strict';
         $scope.searchesChecked = [];
         $scope.orderProp = 'name';  // Default sort field
@@ -198,7 +198,7 @@ app.controller(
          */
         $scope.deleteSearches = function () {
 
-            var modalInstance = $modal.open(
+            var modalInstance = $uibModal.open(
                 {
                     templateUrl: '/api/admin/partials/confirm.html',
                     controller: 'confirmationController',
@@ -257,7 +257,7 @@ app.controller(
         $scope.createSearch = function () {
 
 
-            var modalInstance = $modal.open(
+            var modalInstance = $uibModal.open(
                 {
                     templateUrl: '/api/admin/partials/editSearchForm.html',
                     controller: 'createSearchController',
@@ -292,12 +292,12 @@ app.controller(
          *
          * todo Debug form submission issue
          */
-        $scope.editSearch = function ($modalInstance) {
+        $scope.editSearch = function ($uibModalInstance) {
             var selected;
             $log.debug('Search passed to edit', this.selected);
             selected = this.selected;
             //noinspection JSUnusedGlobalSymbols
-            var modalInstance = $modal.open(
+            var modalInstance = $uibModal.open(
                 {
                     templateUrl: '/api/admin/partials/editSearchForm.html',
                     controller: editSearchController,

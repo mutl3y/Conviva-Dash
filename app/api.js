@@ -332,7 +332,7 @@ var B2BSearch = require('../app/models/b2bsearches');
 var statusCMD = require('../app/models/statusModel');
 var mongo = require('mongoskin');
 var b2bDB = mongo.db(
-    'mongodb://localhost:27017/testing', {
+    'mongodb://localhost:27017/conviva', {
         db: {
             readPreference: mongo.ReadPreference.PRIMARY_PREFERRED
         },
@@ -388,6 +388,7 @@ var validateQuery = function (results, q) {
         console.log(msg);
         return q;
     };    // Function to parse statuary fields
+
     var rqa, qa, properties;
 
     q.valid = false;                    // Default valid to false;
@@ -441,8 +442,6 @@ var validateQuery = function (results, q) {
             var f = qa[x].field;
             var qu = qa[x].query || '';
 
-            //console.log(typeof(q));
-            //console.log('\n\nQuery array object ', qa[x]);
             if (f === rf) {
                 var t;
                 if ((rrequired && qu.length < rmin) || (qu.length > 0 && qu.length < rmin)) {

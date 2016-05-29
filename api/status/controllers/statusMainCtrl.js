@@ -8,7 +8,7 @@
  * @requires $scope
  * */
 
-app.controller('StatusMainController', function ($scope, $http, $modal, $log, $resource) {
+app.controller('StatusMainController', function ($scope, $http, $uibModal, $log, $resource) {
         'use strict';
         $scope.orderProp = 'name';          // Default sort field
         $scope.direction = false;           // default search direction false = ascending

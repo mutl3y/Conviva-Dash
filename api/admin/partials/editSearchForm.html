@@ -15,7 +15,7 @@
                        ng-model="formData.name"
                        ng-minlength=6 ng-maxlength=100
                        class="form-control" ng-required="true"
-                       popover-trigger="mouseenter" popover="This needs to be a unique descriptive name for the search">
+                       popover-trigger="mouseenter" uib-popover="This needs to be a unique descriptive name for the search">
             </div>
         </div>
 
@@ -37,9 +37,9 @@
                        id="database"
                        placeholder=""
                        ng-model="formData.database"
-                       ng-minlength=6 ng-maxlength=40
+                       ng-minlength=3 ng-maxlength=40
                        class="form-control" ng-required="true"
-                       popover-trigger="mouseenter" popover="This needs to be exact, Case sensitive">
+                       popover-trigger="mouseenter" uib-popover="This needs to be exact, Case sensitive">
             </div>
         </div>
 
@@ -51,9 +51,9 @@
                        id="Collection"
                        placeholder=""
                        ng-model="formData.Collection"
-                       ng-minlength=6 ng-maxlength=40
+                       ng-minlength=3 ng-maxlength=40
                        class="form-control" ng-required="true"
-                       popover-trigger="mouseenter" popover="This needs to be exact, Case sensitive">
+                       popover-trigger="mouseenter" uib-popover="This needs to be exact, Case sensitive">
             </div>
         </div>
 
@@ -72,7 +72,7 @@
                     <input type="text" class="form-control" ng-model="queryObject.field" ng-minlength=1 ng-maxlength=30
                            id="queryObject.field" placeholder="field" ng-required="true"
                            popover-trigger="mouseenter"
-                           popover="Please use full db field syntax as you would use in MongoDB dot notation syntax, quotes not required!">
+                           uib-popover="Please use full db field syntax as you would use in MongoDB dot notation syntax, quotes not required!">
                 </div>
 
                 <div class="col-sm-4">
@@ -80,7 +80,7 @@
                     <input type="text" class="form-control" ng-model="queryObject.name" ng-minlength=1 ng-maxlength=30
                            id="queryObject.name" placeholder="Display Name" ng-required="true"
                            popover-trigger="mouseenter"
-                           popover="Descriptive name, E.G you may express field 'n' as 'Name'">
+                           uib-popover="Descriptive name, E.G you may express field 'n' as 'Name'">
                 </div>
 
                 <div class="col-sm-3">
@@ -97,25 +97,25 @@
                            id="queryObject.helperText" placeholder="Popup text to assist user"
                            ng-required="true"
                            popover-trigger="mouseenter"
-                           popover="This is where you put helpfull remarks to help the user to fill the form in corectly">
+                           uib-popover="This is where you put helpfull remarks to help the user to fill the form in corectly">
                 </div>
 
                 <div class="col-sm-2">
                     <label for="queryObject.required" class=" control-label">Required</label>
                     <input type="checkbox" id=queryObject.required class="form-control" ng-model="queryObject.required"
-                           popover-trigger="mouseenter" popover="Is this an optional field for the search">
+                           popover-trigger="mouseenter" uib-popover="Is this an optional field for the search">
 
                 </div>
 
                 <div class="col-sm-2">
                     <label for="queryObject.min" class="control-label">Min</label>
                     <input type="number" class="form-control " ng-model="queryObject.min" ng-minlength=1
-                           ng-maxlength=3
+                           ng-maxlength=5
                            id="queryObject.min"
                            placeholder="Min Value"
                            ng-required="true"
                            popover-trigger="mouseenter"
-                           popover="Minimun length of field, Used in validating user search submissions">
+                           uib-popover="Minimun length of field, Used in validating user search submissions">
                 </div>
 
                 <div class="col-sm-2">
@@ -124,21 +124,21 @@
                            ng-maxlength=3 id="queryObject.max" placeholder="Max Value"
                            ng-required="true"
                            popover-trigger="mouseenter"
-                           popover="Maximun length of field, Used in validating user search submiassions">
+                           uib-popover="Maximun length of field, Used in validating user search submiassions">
                 </div>
 
                 <div class="col-sm-6">
                     <label for="queryObject.regExp" class="control-label">Regular Expression</label>
                     <input type="text" class="form-control " ng-model="queryObject.regExp" id="queryObject.regExp"
                            placeholder="Regular Expression"
-                           popover-trigger="mouseenter" popover="Basic regular expression syntax supported">
+                           popover-trigger="mouseenter" uib-popover="Basic regular expression syntax supported">
                 </div>
 
                 <!--<div class="col-sm-3" ng-show="queryObject.regExp.length>0">-->
                 <!--<label for="queryObject.case" class=" control-label">Case Sensitive</label>-->
                 <!--<input type="checkbox" id=queryObject.case class=" form-control" ng-model="queryObject.case"-->
                 <!--popover-trigger="mouseenter"-->
-                <!--popover="If the regualar expression should not be case sensative check this box">-->
+                <!--uib-popover="If the regualar expression should not be case sensative check this box">-->
                 <!--</div>-->
 
             </div>
@@ -156,14 +156,14 @@
                        id="projection" ng-minlength=3 ng-maxlength=200
                        placeholder='fields to return from query.' ng-required="true"
                        popover-trigger="mouseenter"
-                       popover="Use this to filter the results of the search, Comma seperated, DOT Notation E.G. a._id : 0  There is no need to use quotes of any type as these are removed before a save and then added dynamically.">
+                       uib-popover="Use this to filter the results of the search, Comma seperated, DOT Notation E.G. a._id : 0  There is no need to use quotes of any type as these are removed before a save and then added dynamically.">
             </div>
 
             <label for="active" class="col-sm-2 control-label">Activate</label>
 
             <div class="col-sm-1">
                 <input type="checkbox" id=active class="form-control" ng-model="formData.active"
-                       popover-trigger="mouseenter" popover="Search must be activated for end users to use it">
+                       popover-trigger="mouseenter" uib-popover="Search must be activated for end users to use it">
             </div>
 
         </div>
