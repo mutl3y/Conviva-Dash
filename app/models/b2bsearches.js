@@ -8,6 +8,8 @@
 // load the things we need
 var mongoose, schema, type, ObjectId, Mixed, searchSchema, queryObject, objectHistory;
 mongoose = require('mongoose');
+//var regexSearch = require('mongoose-regex');
+
 //require('mongoose-regexp')(mongoose);
 
 schema = mongoose.Schema;

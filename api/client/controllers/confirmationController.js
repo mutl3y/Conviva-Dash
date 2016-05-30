@@ -4,11 +4,12 @@
 
 app.controller(
     'confirmationController', function ($scope, $uibModalInstance) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
+        $log.debug('confirmation controller initial scope ', $scope);
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
 
-    $scope.confirm = function () {
-        $uibModalInstance.close('True');
-    };
+        $scope.confirm = function () {
+            $uibModalInstance.close('True');
+        };
 });

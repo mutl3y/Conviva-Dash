@@ -22,8 +22,9 @@
 
 app.controller(
         'ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+        $log.debug('modal instance controller initial scope ', $scope);
         $scope.items = items;
-    $scope.selected = {
+        $scope.selected = {
         item: $scope.items[0]
     };
 

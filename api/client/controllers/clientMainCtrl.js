@@ -23,6 +23,7 @@ var clientMainCtrl;
 app.controller(
     'clientMainCtrl', function ($scope, $http, $uibModal, $log) {
         'use strict';
+        $log.debug('client main controller initial scope ', $scope);
         $scope.orderProp = 'name';  // Default sort field
         $scope.direction = false;   // default search direction false= ascending
 
@@ -45,34 +46,43 @@ app.controller(
             }
             this.selected = 'selected';
             $scope.lastSelected = this;
-            //console.log($scope.lastSelected);
         };
 
         $scope.RunTest = function () {
-            $log.debug($scope.selected);
+            $log.debug('scope.lastSelected ',$scope.lastSelected);
+            //delete obj[ 0 ].regExp;
+            var runSearch= $scope.lastSelected.search;
+            $log.debug('Unmodified object ', runSearch);
+            for (var a=0; a < runSearch.queryArray.length; a++){
+                var update = runSearch.queryArray[ a ].regExp || '';
+                $log.debug('Re-written object before ', update);
+                update.replace(/\//g, '\\');
+                runSearch.queryArray[ a ].regExp = new RegExp(update);
+                $log.debug('Re-written object after', update);
+            }
+
+
             // todo add open dynamic modal from here using search parameters
-            //noinspection JSUnusedGlobalSymbols
-            //console.log($scope.lastSelected);
-            var modalInstance = $uibModal.open(
+             var modalInstance = $uibModal.open(
                 {
                     templateUrl: '/api/client/partials/search.html',
                     controller : 'searchController',
                     size       : 'lg',
                     resolve    : {
                         obj: function () {
-                            return $scope.lastSelected.search;
+                            return runSearch;
                         }
                     }}
             );
 
             modalInstance.result.then(
                 function (result) {
-                    $log.debug(result);
+                    $log.debug('modal instance result ', result);
 
                     $http.get('/api/b2bActiveSearches').success(
                         function (data) {
                             $scope.searchResults = data;
-                            $log.debug(data);
+                            $log.debug('http.get returned data', data);
                             $scope.selected = '';
                         }
                     ).error(

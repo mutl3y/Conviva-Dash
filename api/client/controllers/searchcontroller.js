@@ -4,7 +4,8 @@ var searchController;
 
 app.controller(
     'searchController', function ($scope, $http, $uibModalInstance, $log, $filter, $timeout, obj) {
-    $log.debug($scope);
+    $log.debug('search controller initial scope ', $scope);
+       
     $scope.showResults = false;
     $scope.alerts = [];
     $scope.resetForm = function () {
@@ -22,22 +23,31 @@ app.controller(
     /**
      * setup arrays to hold search params and form data
      */
-    $scope.searchParams = obj;
-    $scope.resetForm();
+
+        $scope.searchParams = obj;
+        $scope.resetForm();
 
     /**
      * populate formData.queryArray with one empty object per search item
      */
     function populateFormdata() {
         for (var i = 0; i < $scope.searchParams.queryArray.length; i += 1) {
-            var fieldName = $scope.searchParams.queryArray[i].field;
-            var pushObject = {};
-            pushObject.field = fieldName;
-            pushObject.query = '';
-
+             var fieldName = $scope.searchParams.queryArray[i].field;
+            var pushObject = {
+                field : fieldName,
+                query : ''
+            };
             $scope.formData.queryArray.push(pushObject);
-            $log.debug(pushObject);
             $scope.showResults = false;
+
+            //$log.debug('pushObject ', pushObject);
+            //$log.debug('pushObject.field ', pushObject.field);
+            //$log.debug('pushObject.query ', pushObject.query);
+
+            //$log.debug('populate query array ', $scope.searchParams.queryArray);
+            //$log.debug('populate push object ', pushObject);
+            $log.debug('formdata.queryArray object ', $scope.formData.queryArray);
+
         }
     }
 
@@ -78,9 +88,11 @@ app.controller(
         var result;
 //        alert = $scope.formData || 'Didn\'t resolve';   // Tests for returning variable todo remove
         result = $filter('json')($scope.formData);      // Tests for valid JSON
-        $log.debug(result);
+        $log.debug('Active Scope ', $scope);
+        $log.debug('Validate queryArray ', $scope.formData.queryArray);
+        $log.debug('result ', $scope.formData);
         $scope.valid = true;
-        $log.debug('Valid JSON received =  ', $scope.valid);
+        //$log.debug('Valid JSON received =  ', $scope.valid);
     };
 
     $scope.cancel = function () {
@@ -95,7 +107,7 @@ app.controller(
             data   : $scope.formData,
             headers: {'Content-Type': 'application/json;charset=utf-8'}
         };
-        $log.debug(config);
+        $log.debug('Post config ', config);
         $http(config)
             .error(
             function (data, status, headers, config) {
@@ -112,7 +124,7 @@ app.controller(
                 //Debugging stuff todo
                 $log.debug('Status code returned is ' + status);
                 $log.debug('Length of data returned ' + data.data.length);
-                $log.debug(arguments);
+                $log.debug('arguments ', arguments);
 
                 /**
                  * Display message to user
