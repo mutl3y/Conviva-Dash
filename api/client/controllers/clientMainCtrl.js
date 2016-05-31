@@ -54,11 +54,11 @@ app.controller(
             var runSearch= $scope.lastSelected.search;
             $log.debug('Unmodified object ', runSearch);
             for (var a=0; a < runSearch.queryArray.length; a++){
-                var update = runSearch.queryArray[ a ].regExp || '';
+                var update = runSearch.queryArray[ a ].regExp.replace(/\//g, '');
                 $log.debug('Re-written object before ', update);
-                update.replace(/\//g, '\\');
+                $log.debug(update.replace(/\//g, '\\'));
                 runSearch.queryArray[ a ].regExp = new RegExp(update);
-                $log.debug('Re-written object after', update);
+                $log.debug('Re-written object after', runSearch.queryArray[ a ].regExp);
             }
 
 

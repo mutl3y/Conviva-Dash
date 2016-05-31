@@ -10,44 +10,20 @@ if (process.env.NODE_ENV === 'development') {
 /**
  * @description         Declare variables for module.
  */
-var B2BSearch;
+//var B2BSearch;
 
 /**
  * Load external modules
  * @type {exports}
  */
 //mongo = require('mongoskin');
-B2BSearch = require('../app/models/b2bsearches');   // load the searchs from DB
+//B2BSearch = require('../app/models/b2bsearches');   // load the searchs from DB
 
 /**
  *  Declare variables used to hold functions
  */
 var isLoggedIn, isAdmin;
 
-
-/**
- * This is to be replaced with search options coming from DB b2bsearches.projection
- */
-//searchOptions = {
-//    'a._id': 1, 'a.n': 1, 'u.cid': 1, 'u.fn': 1, 'u.ln': 1, 'u.g': 1, 'u.emp': 1,
-//    'u.rs': 1, 'u.del': 1, 's._id': 1, 's.n': 1, 's.as': 1, 's.rs': 1, 's.ac': 1, 's.u': 1};
-
-///**
-//* Temporary db definition for end db access to be moved to config file
-//*
-//* This syntax is compatible with MongoS routers but will require authentication parameters
-//*/
-//b2bDB = mongo.db(
-//    'mongodb://localhost:27017/testing', {
-//        db: {
-//            readPreference: mongo.ReadPreference.PRIMARY_PREFERRED
-//        },
-//        server: {
-//            'auto_reconnect': true,
-//            'socketOptions': { keepAlive: 1 }
-//        }
-//    }
-//);
 
 /**
  * @name        isLoggedIn
@@ -222,11 +198,13 @@ module.exports = function (app, passport, express) {
      */
     app.use('/api/admin', express.static('./api/admin'));   // Serve api  files
     app.use('/api/docs', express.static('./api/docs'));   // Serve api  files
-    app.get('/api/b2bSearches', api.B2bSearches);
+
     app.get('/api/b2bSearch/:id', api.B2bSearch);
-    app.post('/api/b2bSearches', api.createB2bSearches);
-    app.put('/api/b2bSearch/:id', api.updateB2bSearch);
     app.delete('/api/b2bSearch/:id', api.destroyB2bSearch);
+    app.put('/api/b2bSearch/:id', api.updateB2bSearch);
+
+    app.get('/api/b2bSearches', api.B2bSearches);
+    app.post('/api/b2bSearches', api.createB2bSearches);
 
 
     /**
