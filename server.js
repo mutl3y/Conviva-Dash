@@ -62,7 +62,12 @@ secretConf = {
     secret: (conf('session_secret')),
     resave: true,
     saveUninitialized: true,
-    store: new MongoStore({db: 'userSessions'})
+    store: new MongoStore(
+        {
+            url: 'mongodb://localhost/test'
+            // db: 'userSessions'
+        }
+    )
 };
 
 
