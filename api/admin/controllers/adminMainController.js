@@ -138,20 +138,39 @@ angular.module('adminApp').controller(
          * @kind            function
          *
          */
-        $http.get('/api/b2bSearches').success(
-            function (data) {
-                $scope.searchResults = data;
-                $scope.searchNames = [];
-                //console.log( $scope.searchResults[0].name);
-                for (var item in data) {
-                    $scope.searchNames.push(data[item].name);
-                }
+        //$http({
+        //    method: 'GET',
+        //    url   : '/api/b2bSearches'
+        //}).then(function ( successCallback(response)
+        //{
+        //    $scope.status = status;
+        //    $scope.searchResults = data;
+        //    $scope.searchNames = [];
+        //    for (var item in data) {
+        //        $scope.searchNames.push(data[ item ].name);
+        //    }
+        //}
+        //,
+        //function errorCallback( response ) {
+        //    $scope.status = status;
+        //    $log.error('Error whilst querying server: ', data)
+        //}
+        //
+        //)
+        $http({
+            method: 'GET',
+            url   : '/api/b2bSearches'
+        }).then(function successCallback( response ) {
+            $scope.status = response.status;
+            $scope.searchResults = response.data;
+            $scope.searchNames = [];
+            for (var item in $scope.searchResults) {
+                $scope.searchNames.push($scope.searchResults[ item ].name);
             }
-        ).error(
-            function (data) {
-                $log.error('Error whilst querying server: ', data);
-            }
-        );
+        }, function errorCallback( response ) {
+            $scope.status = response.status;
+            $log.error('Error whilst querying server: ', response.data)
+        });
 
         /**
          * @name            deleteSearch

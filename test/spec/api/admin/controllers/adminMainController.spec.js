@@ -155,42 +155,53 @@ describe('Controller: adminMainCtrl', function () {
 
 
     });
-    xdescribe('Http call: $http.get, Should request and return available searches', function () {
+    describe('Http call: $http.get, Should request and return available searches', function () {
         beforeEach(inject(function ( _$httpBackend_ ) {
             $httpBackend = _$httpBackend_;
         }));
-        fdescribe('With data: Test with returned data', function () {
-            
-            it('should request searches from application', function () {
-                $httpBackend.when('GET', '/api/b2bSearches').respond([ {
-                    $$hashKey : "object:3",
-                    Collection: "NowTV",
-                    _id       : "574d9a0a7ceb7e642e580818",
-                    active    : true,
-                    database  : "conviva",
-                    dbEngine  : "mongodb",
-                    explain   : null,
-                    isChecked : true,
-                    name      : "testing",
-                    projection: "_id:0",
-                    queryType : "findOne",
-                    updated   : "2016-05-31T14:05:09.316Z"
-                } ]);
-                $scope.$digest();
+        describe('Without Data: Should return no data', function () {
+            var testObject = {};
 
-            })
-        });
-        describe('Without Data: Test with no returned data', function () {
             it('should request searches from application', function () {
-                $httpBackend.when('GET', '/api/b2bSearches').respond('hello');
+                $httpBackend.when('GET', '/api/b2bSearches').respond();
+                $httpBackend.flush();
+                expect($scope.searchResults).not.toBeDefined();
+
+            });
+        });
+        describe('With data: Test with returned data', function () {
+            var testObject = {
+                $$hashKey : "object:3",
+                Collection: "NowTV",
+                _id       : "574d9a0a7ceb7e642e580818",
+                active    : true,
+                database  : "conviva",
+                dbEngine  : "mongodb",
+                explain   : null,
+                isChecked : true,
+                name      : "testing",
+                projection: "_id:0",
+                queryType : "findOne",
+                updated   : "2016-05-31T14:05:09.316Z"
+            };
+
+            it('should request searches from application', function () {
+                $httpBackend.when('GET', '/api/b2bSearches').respond([ testObject ], 200);
+                $httpBackend.flush();
+                expect($scope.searchResults.length).toBe(1);
             })
         });
         describe('With Error: Force error', function () {
             it('should continue to run but report error to user', function () {
-
+                $httpBackend.when('GET', '/api/b2bSearches').respond(500);
+                $httpBackend.flush();
+                expect($scope.status).toBe(500);
+                expect($scope.searchResults).not.toBeDefined();
             })
         })
     });
+
+
     xdescribe('Function: $scope.deleteSearch,    Should delete selected search', function () {
         it('', function () {
             expect().toBe();

@@ -20,9 +20,9 @@ module.exports = function ( config ) {
             'bower_components/angular/angular.js',
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'bower_components/angular-animate/angular-animate.js',
-            'bower_components/angular-cookies/angular-cookies.js',
+//            'bower_components/angular-cookies/angular-cookies.js',
             'bower_components/angular-resource/angular-resource.js',
-            'bower_components/angular-route/angular-route.js',
+//            'bower_components/angular-route/angular-route.js',
             'bower_components/angular-sanitize/angular-sanitize.js',
             'bower_components/angular-touch/angular-touch.js',
             'bower_components/angular-mocks/angular-mocks.js',
@@ -40,8 +40,8 @@ module.exports = function ( config ) {
 
         plugins: [
             'karma-coverage',
-            'karma-ejs-preprocessor',
             'karma-qunit',
+            'karma-ejs-preprocessor',
             'karma-jasmine',
             'karma-chrome-launcher'
         ],
@@ -84,9 +84,8 @@ module.exports = function ( config ) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: [ 'Chrome' ],
-
-
+        browsers: [ 'chrome' ],
+        
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: false,
