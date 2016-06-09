@@ -1,0 +1,27 @@
+{
+  "name": "Conviva-Dash",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Mark Heynes"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/mutl3y/Conviva-Dash",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.6",
+    "angular-resource": "^1.5.6",
+    "angular-animate": "^1.5.6",
+    "angular-touch": "^1.5.6",
+    "angular-sanitize": "^1.5.6",
+    "bootstrap": "^3.3.6",
+    "ui-bootstrap": "^1.3.3"
+  }
+}
