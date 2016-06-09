@@ -5,7 +5,7 @@
 var createSearchController;
 
 
-app.controller('createSearchController', function ($scope, $http, $filter, $uibModalInstance, $timeout, $log, fieldTypes) {
+angular.module('adminApp').controller('createSearchController', function ( $scope, $http, $filter, $uibModalInstance, $timeout, $log, fieldTypes ) {
     $scope.formData = {
         title     : 'Create Search',
         queryArray: [

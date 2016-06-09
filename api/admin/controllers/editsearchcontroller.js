@@ -2,7 +2,7 @@
 /**
  * @module api/admin/editSearchController
  */
-var editSearchController;
+//var editSearchController;
 
 
 /**
@@ -19,7 +19,8 @@ var editSearchController;
  * @augments angular_module.adminApp
  * @memberOf api/admin
  */
-editSearchController = function ($scope, $http, $uibModalInstance, $log, $filter, obj, fieldTypes) {
+angular.module('adminApp').controller(
+    'editSearchController', function ( $scope, $http, $uibModalInstance, $log, $filter, obj, fieldTypes ) {
     $log.debug('edit controller received this to edit', obj);
     $scope.formData = obj;
     $scope.data = {};
@@ -78,5 +79,5 @@ editSearchController = function ($scope, $http, $uibModalInstance, $log, $filter
 
     $scope.selected2 = undefined;
 
-};
+    });
 

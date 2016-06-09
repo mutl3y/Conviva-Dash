@@ -19,7 +19,7 @@
  * Created by MHeynes on 09/09/2014.
  *
  */
-app.controller(
+angular.module('adminApp').controller(
     'ModalInstanceCtrl',  function ($scope, $uibModalInstance, items) {
 
     $scope.items = items;

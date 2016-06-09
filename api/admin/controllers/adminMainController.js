@@ -14,7 +14,7 @@ var adminMainCtrl;
  * @description Main Angular controller for page
  *
  */
-app.controller(
+angular.module('adminApp').controller(
     'adminMainCtrl', function ($scope, $http, $uibModal, $log) {
         'use strict';
         $scope.searchesChecked = [];
@@ -29,7 +29,7 @@ app.controller(
         $scope.dbTypes = [
             {name: 'MongoDB', popover: 'MongoDB '},
             {name: 'MS_SQL', popover: 'Microsoft SQL Server'},
-            {name: 'MY_SQL', popover: 'Oracle My-SQL'},
+            {name: 'MY_SQL', popover: 'My-SQL'},
             {name: 'Oracle', popover: 'Oracle'}
         ];
 
@@ -80,7 +80,6 @@ app.controller(
          * @kind            function
          */
         $scope.toggleSelected = function () {
-            $log.debug($scope);
             $scope.selected = this.search;
             $scope.selected.isChecked = !$scope.selected.isChecked;
             if (lookupID($scope.selected, $scope.searchesChecked)) {
@@ -94,6 +93,7 @@ app.controller(
                 $log.debug('Pushed New Object \t\t\t', $scope.selected._id);
             }
         };
+
         $scope.RunTest = function () {
             $log.info($scope.searchesChecked);
         };
@@ -102,9 +102,9 @@ app.controller(
          * Reset selections
          */
         $scope.reset = function () {
-            var s, o;
+            var o;
             $scope.searchesChecked = [];
-            for (o = 0; o <= $scope.searchResults.length - 1; o++) {
+            for (o = 0; o < $scope.searchResults.length; o++) {
                 $scope.searchResults[o].isChecked = false;
             }
         };
@@ -276,7 +276,6 @@ app.controller(
                 $log.debug('Create search Modal dismissed, ');
             });
         };
-
 
         /*                     */
         //noinspection JSUnusedLocalSymbols

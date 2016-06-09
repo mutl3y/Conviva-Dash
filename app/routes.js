@@ -37,7 +37,7 @@ isLoggedIn = function (req, res, next) {
     /**
      * todo remove development bypass before publish to prod
      */
-    if (process.env.NODE_ENV === 'development' && (req.ip === '192.168.56.1' || req.ip === '127.0.0.1')) {
+    if (process.env.NODE_ENV === 'development' && (req.ip === '192.168.56.1' || req.ip === '127.0.0.1' || req.ip === '::1')) {
         req.user = testUser;
         return next();
     }

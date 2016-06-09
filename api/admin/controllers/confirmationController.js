@@ -12,7 +12,7 @@
  *
  */
 
-app.controller(
+angular.module('adminApp').controller(
     'confirmationController', function ($scope, $uibModalInstance) {
     /**
      *

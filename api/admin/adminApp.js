@@ -5,7 +5,7 @@
  */
 
 //noinspection JSHint
-var app;
+//var app;
 
 //noinspection JSHint
 /**
@@ -20,5 +20,5 @@ var app;
  *
  * Root of admin app
  */
-app = angular.module('mongoDash', ['ngResource', 'ui.bootstrap', 'ngAnimate']);
+angular.module('adminApp', [ 'ngResource', 'ui.bootstrap', 'ngAnimate' ]);
 
