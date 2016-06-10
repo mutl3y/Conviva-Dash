@@ -1,8 +1,30 @@
 // Karma configuration
 // Generated on Tue Jun 07 2016 17:09:57 GMT+0100 (GMT Summer Time)
 
+var isDebug = process.env.DEBUG || false;
+var browsers = [ isDebug ? 'Chrome' : 'PhantomJS_custom' ];
+
 module.exports = function ( config ) {
     config.set({
+
+        customLaunchers: {
+            'PhantomJS_custom': {
+                base   : 'PhantomJS',
+                options: {
+                    windowName: 'my-window',
+                    settings  : {
+                        webSecurityEnabled: false
+                    },
+                },
+                flags  : [ '--load-images=true' ],
+                debug  : true
+            }
+        },
+
+        phantomjsLauncher: {
+            // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+            exitOnResourceError: true
+        },
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '../',
@@ -27,11 +49,16 @@ module.exports = function ( config ) {
             'bower_components/angular-touch/angular-touch.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'bower_components/ui-bootstrap/dist/ui-bootstrap-1.3.3.js',
+            'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+
             // endbower
+            'test/lib/helpers.js',
             'api/admin/**/*.js',
             //'api/client**/*.js',
             //'api/all/**/*.js',
-            'test/spec/**/*.js'
+            'test/spec/**/*.js',
+            // make the views available to the locally by karma started webserver 
+            {pattern: 'views/**/*', watched: true, served: true, included: false}
         ],
 
 
@@ -43,21 +70,22 @@ module.exports = function ( config ) {
             'karma-qunit',
             'karma-ejs-preprocessor',
             'karma-jasmine',
-            'karma-chrome-launcher'
+            'karma-chrome-launcher',
+            'karma-phantomjs-launcher'
         ],
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            '**/*.ejs'   : [ 'ejs' ],
+            //'views/**/*.ejs'   : [ 'ejs' ],
             'api/**/*.js': [ 'coverage' ]
         }
         ,
 
         ejsOptions: {
-            parentPath: 'views'
-        }
-        ,
+            parentPath  : 'views/',
+            originalPath: 'views/'
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -84,8 +112,8 @@ module.exports = function ( config ) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: [ 'chrome' ],
-        
+        browsers: [ browsers ],
+
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: false,

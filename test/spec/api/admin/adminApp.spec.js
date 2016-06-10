@@ -13,3 +13,14 @@ describe('Module: adminApp', function () {
         });
     });
 });
+
+
+beforeEach(function () {
+    angular.mock.module('adminApp');
+
+    inject(function ( $injector ) {
+        $rootScope = $injector.get('$rootScope');
+        $scope = $rootScope.$new();
+        controller = $injector.get('$controller')('adminMainCtrl', {$scope: $scope});
+    })
+});

@@ -188,7 +188,6 @@ angular.module('adminApp').controller(
             var config = {
                 method: 'DELETE',
                 url: '/api/b2bSearch/' + id,
-//                             data    : {'_id' : id},
                 headers: {'Content-Type': 'application/json;charset=utf-8'}
             };
             $log.debug(config);

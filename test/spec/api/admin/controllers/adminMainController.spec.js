@@ -5,28 +5,16 @@ var $rootScope,
     $scope,
     controller;
 
-beforeEach(function () {
-    module('adminApp');
-
-    inject(function ( $injector ) {
-        $rootScope = $injector.get('$rootScope');
-        $scope = $rootScope.$new();
-        controller = $injector.get('$controller')('adminMainCtrl', {$scope: $scope});
-    })
-});
-
 describe('Controller: adminMainCtrl', function () {
     var adminMainCtrl,
         //httpBackend,
-        scope;
+        scope, doc;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ( $controller, $rootScope ) {
+    beforeEach(inject(function ( $controller, _$rootScope_ ) {
         scope = $rootScope.$new();
-
         adminMainCtrl = $controller('adminMainCtrl', {
             $scope: scope
-            // place here mocked dependencies
         });
     }));
 
@@ -53,8 +41,17 @@ describe('Controller: adminMainCtrl', function () {
 
     // todo Templating checks Needs implementing
     describe('Function: $scope.$watchCollection, watch searchesChecked and modify visible editor buttons', function () {
-        beforeEach(inject(function ( _$httpBackend_ ) {
+        var dom;
+
+        beforeEach(inject(function ( _$httpBackend_, _$compile_ ) {
+            $compile = _$compile_;
             $httpBackend = _$httpBackend_;
+
+            //$document = _$document_;
+
+            jasmine.getFixtures().fixturesPath = "base/views";
+            //loadFixtures('admin/admin.fixtures.html');
+            dom = angular.element(readFixtures('admin.ejs'));
         }));
 
         describe('start without anything selected', function () {
@@ -63,14 +60,16 @@ describe('Controller: adminMainCtrl', function () {
                 $httpBackend.when('GET', '/api/b2bSearches').respond('hello');
                 expect($scope.searchesChecked.length).toBe(0);
                 expect($scope.searchesChecked).toBeDefined();
-
-                //expect($el('#create_Button:btn').count()).toBe(0);
+                expect(dom.find('#create_Button').hasClass('btn')).toBeTruthy();
+               
             })
         });
         describe('with only a single search selected', function () {
             it('should hide create button but show others', function () {
                 $scope.searchesChecked.push('test object');
                 expect($scope.searchesChecked.length).toBe(1);
+                // expect($document.find('div.create_Button')).toHaveClass('btn');
+
             })
         });
         describe('with more than a single search selected', function () {
@@ -80,7 +79,6 @@ describe('Controller: adminMainCtrl', function () {
                 expect($scope.searchesChecked.length).toBeGreaterThan(1)
             })
         });
-
     });
 
 // todo: Need to fix .this addressing
@@ -201,7 +199,6 @@ describe('Controller: adminMainCtrl', function () {
         })
     });
 
-
     xdescribe('Function: $scope.deleteSearch,    Should delete selected search', function () {
         it('', function () {
             expect().toBe();
@@ -217,11 +214,9 @@ describe('Controller: adminMainCtrl', function () {
             expect().toBe();
         })
     });
-    xdescribe('Function: $scope.editSearch,  Should launch an edit search modal', function () {
+    xdescribe('Function: $scope.editSearch,      Should launch an edit search modal', function () {
         it('', function () {
             expect().toBe();
         })
     });
-
-
 });

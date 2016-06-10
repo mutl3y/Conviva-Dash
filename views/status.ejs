@@ -1,5 +1,5 @@
-<%- include head.ejs %>
-<%- include navbar.ejs %>
+<%- include('head.ejs') %>
+<%- include('navbar.ejs') %>
 
 <!-- SET THE CONTROLLER AND GET ALL searchResults -->
 <body ng-app="mongoDashStatus">
@@ -37,7 +37,7 @@
 
 <button ng-click="getStatsData();">Refresh graph</button>
 
-<%- include footer.ejs %>
+<%- include('footer.ejs') %>
 <script src="/js/d3.v3.min.js" charset="utf-8"></script>
 <script src="/js/angular.js"></script>
 <script src="/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
