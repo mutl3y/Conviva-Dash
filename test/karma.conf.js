@@ -1,6 +1,5 @@
 // Karma configuration
 // Generated on Tue Jun 07 2016 17:09:57 GMT+0100 (GMT Summer Time)
-
 var isDebug = process.env.DEBUG || false;
 var browsers = [ isDebug ? 'Chrome' : 'PhantomJS_custom' ];
 
@@ -14,7 +13,7 @@ module.exports = function ( config ) {
                     windowName: 'my-window',
                     settings  : {
                         webSecurityEnabled: false
-                    },
+                    }
                 },
                 flags  : [ '--load-images=true' ],
                 debug  : true

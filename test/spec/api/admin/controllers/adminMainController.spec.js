@@ -19,7 +19,7 @@ describe('Controller: adminMainCtrl', function () {
     }));
 
     describe('Create and set variables', function () {
-        it('should setup inital variables', function () {
+        it('should setup initial variables', function () {
             expect($scope.searchesChecked).toEqual([]);
             expect($scope.orderProp).toEqual('name');
             expect($scope.direction).toEqual(false);
@@ -41,16 +41,11 @@ describe('Controller: adminMainCtrl', function () {
 
     // todo Templating checks Needs implementing
     describe('Function: $scope.$watchCollection, watch searchesChecked and modify visible editor buttons', function () {
-        var dom;
+        var dom, $httpBackend;
 
-        beforeEach(inject(function ( _$httpBackend_, _$compile_ ) {
-            $compile = _$compile_;
+        beforeEach(inject(function ( _$httpBackend_ ) {
             $httpBackend = _$httpBackend_;
-
-            //$document = _$document_;
-
             jasmine.getFixtures().fixturesPath = "base/views";
-            //loadFixtures('admin/admin.fixtures.html');
             dom = angular.element(readFixtures('admin.ejs'));
         }));
 
@@ -154,6 +149,7 @@ describe('Controller: adminMainCtrl', function () {
 
     });
     describe('Http call: $http.get, Should request and return available searches', function () {
+        var $httpBackend;
         beforeEach(inject(function ( _$httpBackend_ ) {
             $httpBackend = _$httpBackend_;
         }));

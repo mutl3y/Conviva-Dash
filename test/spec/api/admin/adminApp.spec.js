@@ -5,7 +5,7 @@
 
 describe('Module: adminApp', function () {
     describe('Check app is defined', function () {
-        it('Should start the app and define dependancy injections', function () {
+        it('Should start the app and define dependency injections', function () {
             expect(angular.module('adminApp')).toBeDefined();
         });
         it('should check modules have been injected', function () {
