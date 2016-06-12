@@ -42,12 +42,11 @@ angular.module('adminApp').controller(
          *
          */
         $scope.$watchCollection('searchesChecked', function () {
-            //noinspection LocalVariableNamingConventionJS
             var $createButton, $editButton, $deleteButton, $resetButton;
-            $createButton = $('#create_Button');
-            $editButton = $('#edit_Button');
-            $deleteButton = $('#delete_Button');
-            $resetButton = $('#reset_Button');
+            $createButton = angular.element('#create_Button');
+            $editButton = angular.element('#edit_Button');
+            $deleteButton = angular.element('#delete_Button');
+            $resetButton = angular.element('#reset_Button');
 
             switch ($scope.searchesChecked.length) {
                 case 0:

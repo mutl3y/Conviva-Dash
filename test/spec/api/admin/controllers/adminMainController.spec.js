@@ -5,14 +5,30 @@ var $rootScope,
     $scope,
     controller;
 
+var testObject = {
+    $$hashKey : "object:3",
+    Collection: "NowTV",
+    _id       : "574d9a0a7ceb7e642e580818",
+    active    : true,
+    database  : "conviva",
+    dbEngine  : "mongodb",
+    explain   : null,
+    isChecked : true,
+    name      : "testing",
+    projection: "_id:0",
+    queryType : "findOne",
+    updated   : "2016-05-31T14:05:09.316Z"
+};
+
 describe('Controller: adminMainCtrl', function () {
     var adminMainCtrl,
         //httpBackend,
-        scope, doc;
+        scope, compile, doc;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ( $controller, _$rootScope_ ) {
+    beforeEach(inject(function ( $controller, _$rootScope_, $compile ) {
         scope = $rootScope.$new();
+        compile = $compile;
         adminMainCtrl = $controller('adminMainCtrl', {
             $scope: scope
         });
@@ -35,43 +51,60 @@ describe('Controller: adminMainCtrl', function () {
                 {name: 'Oracle', popover: 'Oracle'}
             ]);
         });
-
-
     });
 
     // todo Templating checks Needs implementing
     describe('Function: $scope.$watchCollection, watch searchesChecked and modify visible editor buttons', function () {
-        var dom, $httpBackend;
+        var dom, $httpBackend, compiled;
+        var createButton;             // createButton var for debug only
 
         beforeEach(inject(function ( _$httpBackend_ ) {
             $httpBackend = _$httpBackend_;
             jasmine.getFixtures().fixturesPath = "base/views";
-            dom = angular.element(readFixtures('admin.ejs'));
+            $httpBackend.when('GET', '/api/b2bSearches').respond(testObject);
+            compiled = compile(angular.element(readFixtures('admin.ejs')))($scope);
+            $scope.$digest();
+
         }));
 
         describe('start without anything selected', function () {
-            it('should not have classes set for editor buttons', function () {
-                //var $httpBackend;
-                $httpBackend.when('GET', '/api/b2bSearches').respond('hello');
-                expect($scope.searchesChecked.length).toBe(0);
-                expect($scope.searchesChecked).toBeDefined();
-                expect(dom.find('#create_Button').hasClass('btn')).toBeTruthy();
-               
+            it('should start with only Create search button visible', function () {
+                expect(scope.searchesChecked.length).toBe(0);
+                expect(scope.searchesChecked).toBeDefined();
+                expect(compiled.find('#create_Button').hasClass('hidden')).toBeFalsy();
+                expect(compiled.find('#edit_Button').hasClass('hidden')).toBeTruthy();
+                expect(compiled.find('#delete_Button').hasClass('hidden')).toBeTruthy();
+                expect(compiled.find('#reset_Button').hasClass('hidden')).toBeTruthy();
             })
         });
+
+// todo: need to check dom updates as searchesChecked changes
         describe('with only a single search selected', function () {
             it('should hide create button but show others', function () {
-                $scope.searchesChecked.push('test object');
-                expect($scope.searchesChecked.length).toBe(1);
-                // expect($document.find('div.create_Button')).toHaveClass('btn');
+                createButton = compiled.find('#create_Button');
+                scope.searchesChecked.push(testObject);
+                expect(scope.searchesChecked.length).toBe(1);
 
+                compiled.find('#create_Button').addClass('hidden');  // Testing only
+
+                expect(compiled.find('#create_Button').hasClass('hidden')).toBeTruthy();
+                //    expect(compiled.find('#edit_Button').hasClass('hidden')).toBeFalsy();
+                //    expect(compiled.find('#delete_Button').hasClass('hidden')).toBeFalsy();
+                //    expect(compiled.find('#reset_Button').hasClass('hidden')).toBeFalsy();
             })
         });
+
+// todo: need to check dom updates as searchesChecked changes
         describe('with more than a single search selected', function () {
             it('should only show reset and delete buttons', function () {
-                $scope.searchesChecked.push('test object');
-                $scope.searchesChecked.push('test object');
-                expect($scope.searchesChecked.length).toBeGreaterThan(1)
+                scope.searchesChecked.push(testObject);
+                scope.searchesChecked.push(testObject);
+                expect(scope.searchesChecked.length).toBeGreaterThan(1);
+
+                //expect(compiled.find('#create_Button').hasClass('hidden')).toBeTruthy();
+                //expect(compiled.find('#edit_Button').hasClass('hidden')).toBeFalsy();
+                //expect(compiled.find('#delete_Button').hasClass('hidden')).toBeFalsy();
+                //expect(compiled.find('#reset_Button').hasClass('hidden')).toBeFalsy();
             })
         });
     });
@@ -80,20 +113,7 @@ describe('Controller: adminMainCtrl', function () {
     xdescribe('Function: $scope.toggleSelected, toggle search highlighting when selected', function () {
         it('should toggle the selection of a search ', function () {
             $scope.$controller.selected = 'as';
-            $scope.search = {
-                $$hashKey : "object:3",
-                Collection: "NowTV",
-                _id       : "574d9a0a7ceb7e642e580818",
-                active    : true,
-                database  : "conviva",
-                dbEngine  : "mongodb",
-                explain   : null,
-                isChecked : true,
-                name      : "testing",
-                projection: "_id:0",
-                queryType : "findOne",
-                updated   : "2016-05-31T14:05:09.316Z"
-            };
+            $scope.search = testObject;
             $scope.selected = {};
             $scope.selected.isChecked = true;
             console.log(this);
@@ -134,7 +154,6 @@ describe('Controller: adminMainCtrl', function () {
             expect($scope.orderProp).toBe('name');
             expect($scope.direction).toBeFalsy()
         });
-
         it('should invert the sort if passed the same column', function () {
             $scope.sort('name');
             expect($scope.orderProp).toBe('name');
@@ -155,29 +174,14 @@ describe('Controller: adminMainCtrl', function () {
         }));
         describe('Without Data: Should return no data', function () {
             var testObject = {};
-
             it('should request searches from application', function () {
                 $httpBackend.when('GET', '/api/b2bSearches').respond();
                 $httpBackend.flush();
                 expect($scope.searchResults).not.toBeDefined();
-
             });
         });
         describe('With data: Test with returned data', function () {
-            var testObject = {
-                $$hashKey : "object:3",
-                Collection: "NowTV",
-                _id       : "574d9a0a7ceb7e642e580818",
-                active    : true,
-                database  : "conviva",
-                dbEngine  : "mongodb",
-                explain   : null,
-                isChecked : true,
-                name      : "testing",
-                projection: "_id:0",
-                queryType : "findOne",
-                updated   : "2016-05-31T14:05:09.316Z"
-            };
+
 
             it('should request searches from application', function () {
                 $httpBackend.when('GET', '/api/b2bSearches').respond([ testObject ], 200);
@@ -196,7 +200,8 @@ describe('Controller: adminMainCtrl', function () {
     });
 
     xdescribe('Function: $scope.deleteSearch,    Should delete selected search', function () {
-        it('', function () {
+        it('should accept an id to pass to the delete search api', function () {
+            selectedSearch
             expect().toBe();
         })
     });
