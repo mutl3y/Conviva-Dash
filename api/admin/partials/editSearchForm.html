@@ -97,7 +97,7 @@
                            id="queryObject.helperText" placeholder="Popup text to assist user"
                            ng-required="true"
                            popover-trigger="mouseenter"
-                           uib-popover="This is where you put helpfull remarks to help the user to fill the form in corectly">
+                           uib-popover="This is where you put helpful remarks to help the user to fill the form in correctly">
                 </div>
 
                 <div class="col-sm-2">
@@ -115,7 +115,8 @@
                            placeholder="Min Value"
                            ng-required="true"
                            popover-trigger="mouseenter"
-                           uib-popover="Minimun length of field, Used in validating user search submissions">
+                           popover-placement="right"
+                           uib-popover="Minimum length of field, Used in validating user search submissions">
                 </div>
 
                 <div class="col-sm-2">
@@ -124,7 +125,8 @@
                            ng-maxlength=3 id="queryObject.max" placeholder="Max Value"
                            ng-required="true"
                            popover-trigger="mouseenter"
-                           uib-popover="Maximun length of field, Used in validating user search submiassions">
+                           popover-placement="right"
+                           uib-popover="Maximum length of field, Used in validating user search submissions">
                 </div>
 
                 <div class="col-sm-6">
@@ -144,7 +146,7 @@
                 <!--<label for="queryObject.case" class=" control-label">Case Sensitive</label>-->
                 <!--<input type="checkbox" id=queryObject.case class=" form-control" ng-model="queryObject.case"-->
                 <!--popover-trigger="mouseenter"-->
-                <!--uib-popover="If the regualar expression should not be case sensative check this box">-->
+                <!--uib-popover="If the regular expression should not be case sensitive check this box">-->
                 <!--</div>-->
 
             </div>
@@ -162,7 +164,7 @@
                        id="projection" ng-minlength=3 ng-maxlength=200
                        placeholder='fields to return from query.' ng-required="true"
                        popover-trigger="mouseenter"
-                       uib-popover="Use this to filter the results of the search, Comma seperated, DOT Notation E.G. a._id : 0  There is no need to use quotes of any type as these are removed before a save and then added dynamically.">
+                       uib-popover="Use this to filter the results of the search, Comma separated, DOT Notation E.G. a._id : 0  There is no need to use quotes of any type as these are removed before a save and then added dynamically.">
             </div>
 
             <label for="active" class="col-sm-2 control-label">Activate</label>

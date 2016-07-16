@@ -1,4 +1,4 @@
-//var mask = require('json-mask')
+
 
 var searchController;
 
@@ -208,10 +208,10 @@ app.controller(
         // the form is loaded (we wait for the user to interact
         // with the controls before declaring them invalid).
         if (item.$dirty && item.$error.required) {
-            return "Required field";
+            return 'Required field';
         }
         else {
-            return "";
+            return '';
         }
     };
 

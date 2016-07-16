@@ -19,12 +19,13 @@
  * Created by MHeynes on 09/09/2014.
  *
  */
-angular.module('adminApp').controller(
-    'ModalInstanceCtrl',  function ($scope, $uibModalInstance, items) {
+angular.module('adminApp').controller('ModalInstanceCtrl', ModalInstanceCtrl);
+
+function ModalInstanceCtrl( $scope, $uibModalInstance, items ) {
 
     $scope.items = items;
     $scope.selected = {
-        item: $scope.items[0]
+        item: $scope.items[ 0 ]
     };
 
     $scope.ok = function () {
@@ -34,4 +35,4 @@ angular.module('adminApp').controller(
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-});
+}

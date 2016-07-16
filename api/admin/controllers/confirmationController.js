@@ -12,8 +12,9 @@
  *
  */
 
-angular.module('adminApp').controller(
-    'confirmationController', function ($scope, $uibModalInstance) {
+angular.module('adminApp').controller('confirmationController', confirmationController);
+
+function confirmationController( $scope, $uibModalInstance ) {
     /**
      *
      * @description Dismiss modal
@@ -28,4 +29,4 @@ angular.module('adminApp').controller(
     $scope.confirm = function () {
         $uibModalInstance.close('True');
     };
-});
+}

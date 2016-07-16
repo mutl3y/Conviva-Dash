@@ -2,8 +2,6 @@
 /**
  * @module api/admin/editSearchController
  */
-//var editSearchController;
-
 
 /**
  * @param $scope            {object} childscope of parent
@@ -12,15 +10,16 @@
  * @param $log              {object}
  * @param $filter           {object}
  * @param obj               {object}
- * @param fieldTypes        {object} Pass in globaly defined field types
+ * @param fieldTypes        {object} Pass in globally defined field types
  * @description Create and edit search controller for admin app
  * @extends adminApp
  * @class angular_module
  * @augments angular_module.adminApp
- * @memberOf api/admin
+ * @memberOf adminApp/admin
  */
-angular.module('adminApp').controller(
-    'editSearchController', function ( $scope, $http, $uibModalInstance, $log, $filter, obj, fieldTypes ) {
+angular.module('adminApp').controller('editSearchController', editSearchController);
+
+function editSearchController( $scope, $http, $uibModalInstance, $log, $filter, obj, fieldTypes ) {
     $log.debug('edit controller received this to edit', obj);
     $scope.formData = obj;
     $scope.data = {};
@@ -34,8 +33,7 @@ angular.module('adminApp').controller(
     $scope.valid = false;
 
     $scope.validate = function () {
-        var alert, result;
-        alert = $scope.formData || 'Didn\'t resolve';   // Tests for returning variable
+        var result;
         result = $filter('json')($scope.formData);      // Tests for valid JSON
         $scope.formData.projection = $scope.formData.projection.replace(/'/g, ' '); // Remove any single quotes
         $scope.formData.projection = $scope.formData.projection.replace(/"/g, ' '); // Remove any double quotes
@@ -62,12 +60,12 @@ angular.module('adminApp').controller(
         };
         $log.debug(config);
         $http(config).success(
-            function (data) {
+            function ( data ) {
                 $log.debug('Search Sent to server: ', obj.name);
                 $log.debug(data);
             }
         ).error(
-            function (err) {
+            function ( err ) {
                 $log.error('Error submitting form: ', err);
             }
         );
@@ -79,5 +77,5 @@ angular.module('adminApp').controller(
 
     $scope.selected2 = undefined;
 
-    });
+}
 

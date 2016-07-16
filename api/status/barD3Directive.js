@@ -27,8 +27,7 @@ app.directive('d3Bar', function () {
                     var yr1 = parseInt(str1.substring(0, 4));
                     var mon1 = parseInt(str1.substring(5, 7));
                     var dt1 = parseInt(str1.substring(8, 10));
-                    var date1 = new Date(yr1, mon1 - 1, dt1).toDateString();
-                    return date1;
+                    return new Date(yr1, mon1 - 1, dt1).toDateString();
                 }
             };
 

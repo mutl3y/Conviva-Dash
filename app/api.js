@@ -31,7 +31,8 @@ function inArray( needle, haystack ) {
 }
 
 var searchStore = require('../app/models/searchStore');
-var statusCMD = require('../app/models/statusModel');
+// todo remove ?
+// var statusCMD = require('../app/models/statusModel');
 var mongo = require('mongoskin');
 var b2bDB = mongo.db(
     'mongodb://localhost:27017/conviva', {
@@ -45,18 +46,19 @@ var b2bDB = mongo.db(
     }
 );
 
-var adminDB = mongo.db(
-    'mongodb://localhost:27017/admin', {
-        db           : {
-            readPreference: mongo.ReadPreference.PRIMARY_PREFERRED
-        },
-        server       : {
-            'auto_reconnect': true,
-            'socketOptions' : {keepAlive: 1}
-        },
-        native_parser: true
-    }
-);
+// todo remove ?
+//var adminDB = mongo.db(
+//    'mongodb://localhost:27017/admin', {
+//        db           : {
+//            readPreference: mongo.ReadPreference.PRIMARY_PREFERRED
+//        },
+//        server       : {
+//            'auto_reconnect': true,
+//            'socketOptions' : {keepAlive: 1}
+//        },
+//        native_parser: true
+//    }
+//);
 
 /**
  * @name isValidSearch
@@ -67,10 +69,11 @@ var adminDB = mongo.db(
  * Basic validation
  */
 var isValidSearch = function ( obj ) {
-    var validSearch = true;
-    console.log('Validating\t' + obj._id);
+    //validateQuery(obj);
+    var validSearch = true; // todo finsih off server side validation
+    console.log('Validating\t' + obj.title);
     if (validSearch) {
-        console.log('valid     \t' + obj._id);
+        console.log('valid     \t' + obj.title);
         return true;
     } else {
         console.log('invalid   \t', obj);
@@ -95,7 +98,7 @@ var validateQuery = function ( results, q ) {
     var rqa, qa, properties;
 
     q.valid = false;                    // Default valid to false;
-    var qva = [];                           // Create empty array to hold validation results
+    var qva = [];                       // Create empty array to hold validation results
     rqa = results.queryArray;           // Local placeholder for query array from DB
     qa = q.queryArray;                  // Local placeholder for query array from User
     q.db = results.database;            // Retrieve destination db name from DB
@@ -166,13 +169,11 @@ var validateQuery = function ( results, q ) {
 
                     switch (t) {
                         case 'number':
-                            //console.log('Matched Number' + qu);
                             qva.push(f + '.' + rmin + ' : ' + (q >= rmin));
                             q.obj[ f ] = Number(qu);
                             break;
 
                         case 'string':
-                            //console.log('Matched String' + q);
                             qva.push(f + '.length.' + rmax + ' : ' + (qu.length <= rmax ));
                             q.obj[ f ] = String(qu);
                             break;
@@ -188,7 +189,6 @@ var validateQuery = function ( results, q ) {
                                 qva.push('Unknown query attribute : false');
                             }
                     }
-                    //console.log(q.obj[f]);
                 }
             }
         }
@@ -223,11 +223,8 @@ exports.B2bSearch = function ( req, res ) {
 
 exports.createB2bSearches = function ( req, res ) {
     'use strict';
-    //noinspection LocalVariableNamingConventionJS
-
     if (isValidSearch(req.body)) {
-        req.body.history.push({'changeBy': req.user.name});
-        req.body.history.push({'change': 'Initial Creation'});
+        req.body.history.push({'changeBy': req.user.name, 'change': 'Initial Creation'});
         var b2bSearch = new searchStore(req.body);
         b2bSearch.save(function ( err, results ) {
             if (err) {
@@ -277,7 +274,7 @@ exports.destroyB2bSearch = function ( req, res ) {
             exports.B2bSearches(req, res);
             console.log('Deleted \t' + req.params.id);
         }
-        res.json(true);
+        //res.json(true); //todo does this need to return a respoonse
     });
 };
 
@@ -301,7 +298,6 @@ exports.b2bRunSearch = function ( req, res ) {
         queryArray: req.body.queryArray
     };
     var rtn = {};
-
 
     searchStore.findOne({_id: objData.id}, {
             'database'  : 1,
@@ -364,202 +360,204 @@ exports.b2bRunSearch = function ( req, res ) {
     );
 };
 
-/**
- * Returns active status objects for user to choose from
- * @param req   Request object
- * @param res   Response object
- */
-exports.statusOpt = function ( req, res ) {
-    //var count = statusCMD.count({active:true}, function (err, count) {
-    //    if (err) {
-    //        console.log('\nThere was an error retrieving count of status objects');
-    //    } else {
-    //        console.log('Count = ', count);
-    //        if (count === 0) {
-    //            var status = new statusCMD({
-    //                command   : 'listDatabases',
-    //                name      : 'List Databases',
-    //                helperText: 'This will list dbs',
-    //                active    : true
-    //            });
-    //            status.save(function (err, results) {
-    //                if (err) {
-    //                    console.log('\nError occured saving a default status object', err);
-    //                } else {
-    //                    console.log('\nCreated a default status object: ', results);
-    //                }
-    //            });
-    //        }
-    //    }
-    //});
-    statusCMD.find({active: true}, {_id: 1, name: 1, command: 1, helperText: 1}, function ( err, results ) {
-        if (err) {
-            console.log('Error occured finding status objects', err);
-        } else {
-            if (!results) {
-                console.log('No documents found');
-                res.json({name: 'No Staus objects available'});
-            } else {
-                console.log(results);
-                res.json(results);
-            }
-        }
-    });
-};
 
-exports.status = function ( req, res ) {
-    var returnData = [];
-    var serverStatusOptions = {
-        serverStatus      : 1,
-        workingSet        : 1,
-        asserts           : 0,
-        backgroundFlushing: 1,
-        connections       : 1,
-        cursors           : 0,
-        dur               : 0,
-        extra_info        : 0,
-        globalLock        : 1,
-        indexCounters     : 1,
-        locks             : 0,
-        network           : 0,
-        opcounters        : 0,
-        opcountersRepl    : 0,
-        recordStats       : 0,
-        repl              : 1,
-        writeBacksQueued  : 1,
-        mem               : 0,
-        metrics           : 0
-    };
-
-    /**
-     *  Active Object status objects
-     */
-
-    var adminStatusCmds = [
-        {name: 'serverStatus', query: serverStatusOptions},
-        //{name: 'replSetGetStatus', query: {'replSetGetStatus': 1}},
-        {name: 'buildinfo', query: {'buildinfo': 1}},
-        {name: 'getCmdLineOpts', query: {'getCmdLineOpts': 1}},
-        {name: 'connPoolStats', query: {'connPoolStats': 1}},
-        {name: 'startupWarnings', query: {'getLog': 'startupWarnings'}},
-        {name: 'hostInfo', query: {hostInfo: 1}},
-        {name: '_isSelf', query: {'_isSelf': 1}},
-        {name: 'getParameterAll', query: {'getParameter': '*'}},
-        {name: 'shardVersion', query: {'getShardVersion': 'mdbfoo.foo'}},
-        {
-            name: 'List CMD\'s Available', query: {
-            listCommands: 1
-        }
-        },
-        {name: 'test2', query: {'count': 'mdbfoo.foo'}}
-    ];
-
-
-    adminStatusCmds.forEach(function ( stat ) {
-        adminDB.command(stat.query, function ( err, result ) {
-            if (err) {
-                console.log(err);
-            }
-            returnData.push({name: stat.name, type: 'JSON', result: result});
-        });
-    });
-
-
-    adminDB.admin().listDatabases(function ( err, result ) {
-        if (err) {
-            console.log(err);
-        }
-        returnData.push({name: 'dbList', type: 'JSON', result: result.databases});
-    });
-
-    // Return collection list for db with useful stats
-    b2bDB.collections(function ( err, items ) {
-        var returnArray = [];
-        items.forEach(function ( item ) {
-            if (!item.collectionName.startsWith('system')) {
-                //console.log(item);
-                b2bDB.command({'collStats': item.collectionName, scale: 1024}, function ( err, result ) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    returnArray.push({
-                        name: item.collectionName, result: {
-                            nameSpaces   : result.ns,
-                            sizeInKB     : result.size,
-                            storageSizeKB: result.storageSize,
-                            indexCount   : result.nindexes,
-                            indexSizeKB  : result.totalIndexSize
-                        }
-                    });
-                    //console.log(returnArray);
-                });
-
-            }
-        });
-        returnData.push({name: 'Collection Stats', type: 'JSON', result: returnArray});
-    });
-
-    //console.log(b2bDB.collection('invoicePeriod_current'));
-
-
-    b2bDB.collections(function ( err, items ) {
-        var rtnArray = [];
-        var invCols = [];
-        items.forEach(function ( item ) {
-            if (item.collectionName.startsWith('invoicePeriod')) {
-                invCols.push(item.collectionName);
-            }
-        });
-
-        invCols.sort().forEach(function ( invCol ) {
-            b2bDB.collection(invCol).count(function ( err, count ) {
-                var pos = invCol.indexOf('_') + 1;
-                var name = invCol.slice(pos);
-                var date = new Date(name);
-
-                rtnArray.push({
-                    name: name,
-                    y   : count,
-                    y0  : 0,
-                    x   : invCols.indexOf(invCol)
-                });
-            });
-        });
-
-        returnData.push({name: 'CDR Counts Stats', type: 'JSON', result: rtnArray});
-        returnData.push({name: 'CDR\'s by Bill Run (Graph)', type: 'barGraph', result: [ rtnArray ]});
-
-    });
-
-    var statusCmds = [
-
-
-        {
-            name: 'test', query: {
-            listCommands: 1
-        }
-        },
-        {name: 'test2', query: {'count': 'customers'}},
-    ];
-
-    statusCmds.forEach(function ( stat ) {
-        b2bDB.command(stat.query, function ( err, result ) {
-            if (err) {
-                console.log(err);
-            }
-            returnData.push({name: stat.name, result: result});
-        });
-    });
-
-    setTimeout(function () {
-        //console.log('Returning data with setTimeout, 500');
-        res.send(returnData);
-        for (var x = 0; x >= returnData.length; x++) {
-            console.log(returnData[ x ]);
-            console.log(x);
-        }
-        adminDB.close();
-    }, 500);
-
-
-};
+//
+///**
+// * Returns active status objects for user to choose from
+// * @param req   Request object
+// * @param res   Response object
+// */
+//exports.statusOpt = function ( req, res ) {
+//    //var count = statusCMD.count({active:true}, function (err, count) {
+//    //    if (err) {
+//    //        console.log('\nThere was an error retrieving count of status objects');
+//    //    } else {
+//    //        console.log('Count = ', count);
+//    //        if (count === 0) {
+//    //            var status = new statusCMD({
+//    //                command   : 'listDatabases',
+//    //                name      : 'List Databases',
+//    //                helperText: 'This will list dbs',
+//    //                active    : true
+//    //            });
+//    //            status.save(function (err, results) {
+//    //                if (err) {
+//    //                    console.log('\nError occured saving a default status object', err);
+//    //                } else {
+//    //                    console.log('\nCreated a default status object: ', results);
+//    //                }
+//    //            });
+//    //        }
+//    //    }
+//    //});
+//    statusCMD.find({active: true}, {_id: 1, name: 1, command: 1, helperText: 1}, function ( err, results ) {
+//        if (err) {
+//            console.log('Error occured finding status objects', err);
+//        } else {
+//            if (!results) {
+//                console.log('No documents found');
+//                res.json({name: 'No Staus objects available'});
+//            } else {
+//                console.log(results);
+//                res.json(results);
+//            }
+//        }
+//    });
+//};
+//
+//exports.status = function ( req, res ) {
+//    var returnData = [];
+//    var serverStatusOptions = {
+//        serverStatus      : 1,
+//        workingSet        : 1,
+//        asserts           : 0,
+//        backgroundFlushing: 1,
+//        connections       : 1,
+//        cursors           : 0,
+//        dur               : 0,
+//        extra_info        : 0,
+//        globalLock        : 1,
+//        indexCounters     : 1,
+//        locks             : 0,
+//        network           : 0,
+//        opcounters        : 0,
+//        opcountersRepl    : 0,
+//        recordStats       : 0,
+//        repl              : 1,
+//        writeBacksQueued  : 1,
+//        mem               : 0,
+//        metrics           : 0
+//    };
+//
+//    /**
+//     *  Active Object status objects
+//     */
+//
+//    var adminStatusCmds = [
+//        {name: 'serverStatus', query: serverStatusOptions},
+//        //{name: 'replSetGetStatus', query: {'replSetGetStatus': 1}},
+//        {name: 'buildinfo', query: {'buildinfo': 1}},
+//        {name: 'getCmdLineOpts', query: {'getCmdLineOpts': 1}},
+//        {name: 'connPoolStats', query: {'connPoolStats': 1}},
+//        {name: 'startupWarnings', query: {'getLog': 'startupWarnings'}},
+//        {name: 'hostInfo', query: {hostInfo: 1}},
+//        {name: '_isSelf', query: {'_isSelf': 1}},
+//        {name: 'getParameterAll', query: {'getParameter': '*'}},
+//        {name: 'shardVersion', query: {'getShardVersion': 'mdbfoo.foo'}},
+//        {
+//            name: 'List CMD\'s Available', query: {
+//            listCommands: 1
+//        }
+//        },
+//        {name: 'test2', query: {'count': 'mdbfoo.foo'}}
+//    ];
+//
+//
+//    adminStatusCmds.forEach(function ( stat ) {
+//        adminDB.command(stat.query, function ( err, result ) {
+//            if (err) {
+//                console.log(err);
+//            }
+//            returnData.push({name: stat.name, type: 'JSON', result: result});
+//        });
+//    });
+//
+//
+//    adminDB.admin().listDatabases(function ( err, result ) {
+//        if (err) {
+//            console.log(err);
+//        }
+//        returnData.push({name: 'dbList', type: 'JSON', result: result.databases});
+//    });
+//
+//    // Return collection list for db with useful stats
+//    b2bDB.collections(function ( err, items ) {
+//        var returnArray = [];
+//        items.forEach(function ( item ) {
+//            if (!item.collectionName.startsWith('system')) {
+//                //console.log(item);
+//                b2bDB.command({'collStats': item.collectionName, scale: 1024}, function ( err, result ) {
+//                    if (err) {
+//                        console.log(err);
+//                    }
+//                    returnArray.push({
+//                        name: item.collectionName, result: {
+//                            nameSpaces   : result.ns,
+//                            sizeInKB     : result.size,
+//                            storageSizeKB: result.storageSize,
+//                            indexCount   : result.nindexes,
+//                            indexSizeKB  : result.totalIndexSize
+//                        }
+//                    });
+//                    //console.log(returnArray);
+//                });
+//
+//            }
+//        });
+//        returnData.push({name: 'Collection Stats', type: 'JSON', result: returnArray});
+//    });
+//
+//    //console.log(b2bDB.collection('invoicePeriod_current'));
+//
+//
+//    b2bDB.collections(function ( err, items ) {
+//        var rtnArray = [];
+//        var invCols = [];
+//        items.forEach(function ( item ) {
+//            if (item.collectionName.startsWith('invoicePeriod')) {
+//                invCols.push(item.collectionName);
+//            }
+//        });
+//
+//        invCols.sort().forEach(function ( invCol ) {
+//            b2bDB.collection(invCol).count(function ( err, count ) {
+//                var pos = invCol.indexOf('_') + 1;
+//                var name = invCol.slice(pos);
+//                var date = new Date(name);
+//
+//                rtnArray.push({
+//                    name: name,
+//                    y   : count,
+//                    y0  : 0,
+//                    x   : invCols.indexOf(invCol)
+//                });
+//            });
+//        });
+//
+//        returnData.push({name: 'CDR Counts Stats', type: 'JSON', result: rtnArray});
+//        returnData.push({name: 'CDR\'s by Bill Run (Graph)', type: 'barGraph', result: [ rtnArray ]});
+//
+//    });
+//
+//    var statusCmds = [
+//
+//
+//        {
+//            name: 'test', query: {
+//            listCommands: 1
+//        }
+//        },
+//        {name: 'test2', query: {'count': 'customers'}},
+//    ];
+//
+//    statusCmds.forEach(function ( stat ) {
+//        b2bDB.command(stat.query, function ( err, result ) {
+//            if (err) {
+//                console.log(err);
+//            }
+//            returnData.push({name: stat.name, result: result});
+//        });
+//    });
+//
+//    setTimeout(function () {
+//        //console.log('Returning data with setTimeout, 500');
+//        res.send(returnData);
+//        for (var x = 0; x >= returnData.length; x++) {
+//            console.log(returnData[ x ]);
+//            console.log(x);
+//        }
+//        adminDB.close();
+//    }, 500);
+//
+//
+//};

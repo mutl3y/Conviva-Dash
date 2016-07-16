@@ -21,7 +21,7 @@ var clientMainCtrl;
  *  @kind            function
  */
 app.controller(
-    'clientMainCtrl', function ($scope, $http, $uibModal, $log) {
+    'clientMainCtrl', function ( $scope, $http, $uibModal, $log ) {
         'use strict';
         $log.debug('client main controller initial scope ', $scope);
         $scope.orderProp = 'name';  // Default sort field
@@ -49,11 +49,11 @@ app.controller(
         };
 
         $scope.RunTest = function () {
-            $log.debug('scope.lastSelected ',$scope.lastSelected);
+            $log.debug('scope.lastSelected ', $scope.lastSelected);
             //delete obj[ 0 ].regExp;
-            var runSearch= $scope.lastSelected.search;
+            var runSearch = $scope.lastSelected.search;
             $log.debug('Unmodified object ', runSearch);
-            for (var a=0; a < runSearch.queryArray.length; a++){
+            for (var a = 0; a < runSearch.queryArray.length; a++) {
                 var update = runSearch.queryArray[ a ].regExp.replace(/\//g, '');
                 $log.debug('Re-written object before ', update);
                 $log.debug(update.replace(/\//g, '\\'));
@@ -63,7 +63,7 @@ app.controller(
 
 
             // todo add open dynamic modal from here using search parameters
-             var modalInstance = $uibModal.open(
+            var modalInstance = $uibModal.open(
                 {
                     templateUrl: '/api/client/partials/search.html',
                     controller : 'searchController',
@@ -72,24 +72,24 @@ app.controller(
                         obj: function () {
                             return runSearch;
                         }
-                    }}
+                    }
+                }
             );
 
             modalInstance.result.then(
-                function (result) {
+                function ( result ) {
                     $log.debug('modal instance result ', result);
 
-                    $http.get('/api/b2bActiveSearches').success(
-                        function (data) {
-                            $scope.searchResults = data;
-                            $log.debug('http.get returned data', data);
+                    $http.get('/api/b2bActiveSearches').then(
+                        function successCallback( response ) {
+                            $scope.searchResults = response;
+                            $log.debug('http.get returned data', response);
                             $scope.selected = '';
-                        }
-                    ).error(
-                        function (data) {
-                            $log.error('Oops: ', data);
-                        }
-                    );
+                        },
+                        function errorCallback( response ) {
+                            $scope.status = response.status;
+                            $log.error('Error deleting search: ', response);
+                        });
 
                 }, function () {
                     $log.debug('Run Search Modal dismissed ');
@@ -107,7 +107,7 @@ app.controller(
          *
          * @kind            function
          */
-        $scope.sort = function (column) {
+        $scope.sort = function ( column ) {
             if ($scope.orderProp === column) {
                 $scope.direction = !$scope.direction;
             } else {
@@ -126,16 +126,27 @@ app.controller(
          * @kind            function
          *
          */
-        $http.get('/api/b2bActiveSearches').success(
-            function (data) {
-                $scope.searchResults = data;
-                /// $log.debug(data);
-            }
-        ).error(
-            function (data) {
-                $log.error('Error whilst querying server: ', data);
-            }
-        );
+        //$http.get('/api/b2bActiveSearches').success(
+        //    function ( data ) {
+        //        $scope.searchResults = data;
+        //        $log.debug(data);
+        //    }
+        //).error(
+        //    function ( data ) {
+        //        $log.error('Error whilst querying server: ', data);
+        //    }
+        //);
+
+        $http({
+            method: 'GET',
+            url   : '/api/b2bActiveSearches'
+        }).then(function successCallback( response ) {
+            $scope.status = response.status;
+            $scope.searchResults = response.data;
+        }, function errorCallback( response ) {
+            $scope.status = response.status;
+            $log.error('Error whilst querying server: ', response.data);
+        });
 
     }
 ); // end client main controller

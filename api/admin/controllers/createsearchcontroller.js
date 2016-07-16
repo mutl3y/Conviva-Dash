@@ -2,16 +2,18 @@
  * @class angular_module.adminApp.createSearchController
  * Created by MHeynes on 09/09/2014.
  */
-var createSearchController;
+//var createSearchController;
 
 
-angular.module('adminApp').controller('createSearchController', function ( $scope, $http, $filter, $uibModalInstance, $timeout, $log, fieldTypes ) {
+angular.module('adminApp').controller('createSearchController', createSearchController);
+
+function createSearchController( $scope, $http, $filter, $uibModalInstance, $timeout, $log, fieldTypes ) {
     $scope.formData = {
         title     : 'Create Search',
         queryArray: [
             {}
         ],
-        history   : [ ]
+        history   : []
     };
     $log.debug('printing scope', $scope);
     $scope.data = {};
@@ -20,8 +22,7 @@ angular.module('adminApp').controller('createSearchController', function ( $scop
     $scope.validJson = false;
     /*   button choices */
     $scope.validate = function () {
-        var alert, result;
-        alert = $scope.formData || 'Didn\'t resolve';   // Tests for returning variable
+        var result;
         result = $filter('json')($scope.formData);      // Tests for valid JSON
         alertT(result, 3000);
         if (result === 1) {
@@ -54,14 +55,13 @@ angular.module('adminApp').controller('createSearchController', function ( $scop
         };
         //$log.debug(config);
         $http(config).success(
-            function (data) {
+            function ( data ) {
                 $log.debug('Search added', $scope.formData.name);
                 $uibModalInstance.close(data);
                 //$log.debug(data);
-            }).
-            error(function (err) {
-                $log.error('Error submitting form: ', err);
-            });
+            }).error(function ( err ) {
+            $log.error('Error submitting form: ', err);
+        });
         // todo Validate this search utilizing same check as for new searches
 
 
@@ -69,4 +69,4 @@ angular.module('adminApp').controller('createSearchController', function ( $scop
 
 
     $scope.status = 'loading...';
-});
+}
